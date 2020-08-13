@@ -1,0 +1,3 @@
+# jeux-zone-geographique
+
+Pour lancer le jeux, executer le fichier jeux-zone-geographique.jar dans JAR-EXECUTABLE ...
