@@ -1,23 +1,25 @@
 package zoneGeographique;
 
-import position.*;
-import characteres.*;
-import interfaceGraphique.*;
-
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Random;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JPanel;
 
-public class ZoneGeographique extends JPanel implements ActionListener {
+import characteres.Charactere;
+import characteres.Intrus;
+import characteres.Robot;
+import interfaceGraphique.FenetreChoixEmplacement;
+import interfaceGraphique.FenetreChoixEmplacementIntrus;
+import interfaceGraphique.FenetreChoixEmplacementRobots;
+import interfaceGraphique.FenetreJeux;
+import interfaceGraphique.FenetreResultat;
+import position.Position;
+
+public class ZoneGeographique {
 
 	private int n, m, nbSorties, nbSacArgent, nbCharacteres, nbObstacles; // n = nombre de lignes , m = nombre de
 																			// colonnes
@@ -31,7 +33,7 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 	private int joueurGagnant;
 
 	private int[][] cases;
-	private JPanel grid;
+
 	/*
 	 * 0 - vide, 1 - robot, 2 - intrus, 3 - source d'argent, 4 - obstacle, 5 -
 	 * sortie
@@ -40,8 +42,6 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 	/*
 	 * -3 argent volee -2 intrus attrappé
 	 */
-
-	private JButton[][] buttons;
 
 	private String etatJeux = "DebutConfiguration";
 
@@ -57,8 +57,6 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 
 	public ZoneGeographique(int nbL, int nbC, int nbSorties, int nbSacArgent, int nbChar, int nbObstacles) {
 
-		setLayout(new BorderLayout());
-
 		n = nbL;
 		m = nbC;
 		this.nbSorties = nbSorties;
@@ -69,22 +67,10 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 		nomJoueur2 = "";
 
 		cases = new int[n][m];
-		buttons = new JButton[n][m];
-		grid = new JPanel(new GridLayout(n, m));
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
-				buttons[i][j] = new JButton();
-				buttons[i][j].setBorderPainted(true);
-				buttons[i][j].setBackground(Color.white);
-				buttons[i][j].addActionListener(this);
 
-				grid.add(buttons[i][j]);
-			}
-		}
-		add(grid, BorderLayout.CENTER);
 	}
 
-	public void set_case(int i, int j, String val) {
+	public void set_case(int i, int j, String val, JButton[][] buttons) {
 		if (val.equals("sortie")) {
 			cases[i][j] = 5;
 			Image sortieImg = new ImageIcon(getClass().getResource("/icones/exit.png")).getImage();
@@ -92,7 +78,7 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 			sortieImg = sortieImg.getScaledInstance(min, min, Image.SCALE_SMOOTH);
 			Icon sortieIcon = new ImageIcon(sortieImg);
 			buttons[i][j].setIcon(sortieIcon);
-			validate();
+			buttons[i][j].validate();
 		}
 		if (val.equals("robot")) {
 			cases[i][j] = 1;
@@ -101,7 +87,7 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 					Image.SCALE_SMOOTH);
 			Icon robotIcon = new ImageIcon(robotImg);
 			buttons[i][j].setIcon(robotIcon);
-			validate();
+			buttons[i][j].validate();
 		}
 		if (val.equals("argent")) {
 			cases[i][j] = 3;
@@ -110,7 +96,7 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 					Image.SCALE_SMOOTH);
 			Icon ArgentIcon = new ImageIcon(ArgentImg);
 			buttons[i][j].setIcon(ArgentIcon);
-			validate();
+			buttons[i][j].validate();
 		}
 		if (val.equals("argentVolee")) {
 			cases[i][j] = -3;
@@ -119,12 +105,12 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 					Image.SCALE_SMOOTH);
 			Icon ArgentIcon = new ImageIcon(ArgentImg);
 			buttons[i][j].setIcon(ArgentIcon);
-			validate();
+			buttons[i][j].validate();
 		}
 		if (val.equals("vide")) {
 			cases[i][j] = 0;
 			buttons[i][j].setIcon(null);
-			validate();
+			buttons[i][j].validate();
 			buttons[i][j].setBackground(Color.white);
 		}
 		if (val.equals("obstacle")) {
@@ -134,7 +120,7 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 					Image.SCALE_SMOOTH);
 			Icon obstacleIcon = new ImageIcon(obstacleImg);
 			buttons[i][j].setIcon(obstacleIcon);
-			validate();
+			buttons[i][j].validate();
 		}
 		if (val.equals("intrus")) {
 			cases[i][j] = 2;
@@ -143,7 +129,7 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 					Image.SCALE_SMOOTH);
 			Icon intrusIcon = new ImageIcon(intrusImg);
 			buttons[i][j].setIcon(intrusIcon);
-			validate();
+			buttons[i][j].validate();
 		}
 		if (val.equals("intrus1")) {
 			cases[i][j] = 2;
@@ -152,7 +138,7 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 					Image.SCALE_SMOOTH);
 			Icon intrusIcon = new ImageIcon(intrusImg);
 			buttons[i][j].setIcon(intrusIcon);
-			validate();
+			buttons[i][j].validate();
 		}
 		if (val.equals("intrus2")) {
 			cases[i][j] = 2;
@@ -161,7 +147,7 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 					Image.SCALE_SMOOTH);
 			Icon intrusIcon = new ImageIcon(intrusImg);
 			buttons[i][j].setIcon(intrusIcon);
-			validate();
+			buttons[i][j].validate();
 		}
 		if (val.equals("intrusAttrappe")) {
 			cases[i][j] = -2;
@@ -170,7 +156,7 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 					Image.SCALE_SMOOTH);
 			Icon intrusIcon = new ImageIcon(intrusImg);
 			buttons[i][j].setIcon(intrusIcon);
-			validate();
+			buttons[i][j].validate();
 		}
 
 		if (val == "highlightedJ1") {
@@ -179,36 +165,70 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 			img = img.getScaledInstance(buttons[i][j].getWidth(), buttons[i][j].getHeight(), Image.SCALE_SMOOTH);
 			Icon icon = new ImageIcon(img);
 			buttons[i][j].setIcon(icon);
-			validate();
+			buttons[i][j].validate();
 		}
 		if (val == "highlightedJ2") {
 			Image img = new ImageIcon(getClass().getResource("/icones/selectIntrus.png")).getImage();
 			img = img.getScaledInstance(buttons[i][j].getWidth(), buttons[i][j].getHeight(), Image.SCALE_SMOOTH);
 			Icon icon = new ImageIcon(img);
 			buttons[i][j].setIcon(icon);
-			validate();
+			buttons[i][j].validate();
 		}
 		if (val == "highlightedJ2Exit") {
 			Image img = new ImageIcon(getClass().getResource("/icones/selectedExit.png")).getImage();
 			img = img.getScaledInstance(buttons[i][j].getWidth(), buttons[i][j].getHeight(), Image.SCALE_SMOOTH);
 			Icon icon = new ImageIcon(img);
 			buttons[i][j].setIcon(icon);
-			validate();
+			buttons[i][j].validate();
 		}
 		if (val.equals("restore")) {
 			buttons[i][j].setIcon(null);
-			validate();
+			buttons[i][j].validate();
 		}
 	}
 
-	public void choix_aleatoire_sorties() {
+	public int get_case(int i, int j) {
+		return cases[i][j];
+	}
+
+	public void paint_zone(JButton[][] buttons) {
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				switch (cases[i][j]) {
+				case 0:
+					set_case(i, j, "vide", buttons);
+					break;
+				case 1:
+					set_case(i, j, "robot", buttons);
+					break;
+				case 2:
+					set_case(i, j, "intrus", buttons);
+					break;
+				case 3:
+					set_case(i, j, "argent", buttons);
+					break;
+				case 4:
+					set_case(i, j, "obstacle", buttons);
+					break;
+				case 5:
+					set_case(i, j, "sortie", buttons);
+					break;
+				default:
+					break;
+				}
+			}
+		}
+
+	}
+
+	public void choix_aleatoire_sorties(JButton[][] buttons) {
 		int i, j;
 		for (int k = 0; k < nbSorties; k++) {
 			do {
 				i = genererInt(n);
 				j = genererInt(m);
 			} while (!Bonne_Position_Sortie(i, j));
-			set_case(i, j, "sortie");
+			set_case(i, j, "sortie", buttons);
 		}
 	}
 
@@ -224,25 +244,25 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 		return bool;
 	}
 
-	public void choix_aleatoire_sacs_argents() {
+	public void choix_aleatoire_sacs_argents(JButton[][] buttons) {
 		int i, j;
 		for (int k = 0; k < nbSacArgent; k++) {
 			do {
 				i = genererInt(n);
 				j = genererInt(m);
 			} while (!Bonne_Position_Sac_Argent(i, j));
-			set_case(i, j, "argent");
+			set_case(i, j, "argent", buttons);
 		}
 	}
 
-	public void choix_aleatoire_obstacles() {
+	public void choix_aleatoire_obstacles(JButton[][] buttons) {
 		int i, j;
 		for (int k = 0; k < nbObstacles; k++) {
 			do {
 				i = genererInt(n);
 				j = genererInt(m);
 			} while (!Bonne_Position_Obstacle(i, j));
-			set_case(i, j, "obstacle");
+			set_case(i, j, "obstacle", buttons);
 		}
 	}
 
@@ -340,55 +360,32 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 		return nb;
 	}
 
-	public void Choix_aleatoire() {/*
-		if (etatJeux == "DebutConfiguration") {
-			choix_aleatoire_sorties();
-			choix_aleatoire_sacs_argents();
-			choix_aleatoire_obstacles();
-			FenetreChoixEmplacement.setTopLabel("Confirmer cette configuration ou choisir une autre");
-			etatJeux = "";
-			nbSortiesChoisies = nbSorties;
-			nbSacsArgentChoisi = nbSacArgent;
-			nbObstaclesChoisi = nbObstacles;
-		} else {
-			for (int i = 0; i < n; i++) {
-				for (int j = 0; j < m; j++) {
-					set_case(i, j, "vide");
-				}
-			}
-			choix_aleatoire_sorties();
-			choix_aleatoire_sacs_argents();
-			choix_aleatoire_obstacles();
-			FenetreChoixEmplacement.setTopLabel("Confirmer votre choix ou choisir une autre configuration");
-			etatJeux = "";
-			nbSortiesChoisies = nbSorties;
-			nbSacsArgentChoisi = nbSacArgent;
-			nbObstaclesChoisi = nbObstacles;
-		}*/
+	public void Choix_aleatoire(JButton[][] buttons) {
+
 		if (!etatJeux.equals("DebutConfiguration")) {
-			for (int i = 0; i < n; i++) 
-				for (int j = 0; j < m; j++) 
-					set_case(i, j, "vide");
+			for (int i = 0; i < n; i++)
+				for (int j = 0; j < m; j++)
+					set_case(i, j, "vide", buttons);
 		}
-		choix_aleatoire_sorties();
-		choix_aleatoire_sacs_argents();
-		choix_aleatoire_obstacles();
+		choix_aleatoire_sorties(buttons);
+		choix_aleatoire_sacs_argents(buttons);
+		choix_aleatoire_obstacles(buttons);
 		FenetreChoixEmplacement.setTopLabel("Confirmer cette configuration ou choisir une autre");
 		etatJeux = "";
 		nbSortiesChoisies = nbSorties;
 		nbSacsArgentChoisi = nbSacArgent;
 		nbObstaclesChoisi = nbObstacles;
-		
-			
+
 	}
 
-	private void choixEmplacementintrus(ActionEvent e, int i, int j) {
+	public void choixEmplacementintrus(ActionEvent e, int i, int j, JButton[][] buttons) {
 		if ((nbintruschoisi < nbCharacteres) && (cases[i][j] == 0)) {
-			set_case(i, j, "intrus");
+			set_case(i, j, "intrus", buttons);
 			nbintruschoisi++;
 
 			if (nbintruschoisi == nbCharacteres) {
-				FenetreChoixEmplacementIntrus.setTopLabel("commencer le jeux ou bien modifier l emplacement des intrus");
+				FenetreChoixEmplacementIntrus
+						.setTopLabel("commencer le jeux ou bien modifier l emplacement des intrus");
 				FenetreChoixEmplacementIntrus.setBottomLabel("		");
 			} else {
 				FenetreChoixEmplacementIntrus.setTopLabel(
@@ -396,7 +393,7 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 				FenetreChoixEmplacementIntrus.setBottomLabel("		");
 			}
 		} else if (cases[i][j] == 2) {
-			set_case(i, j, "vide");
+			set_case(i, j, "vide", buttons);
 			if (nbintruschoisi == nbCharacteres) {
 				nbintruschoisi--;
 				FenetreChoixEmplacementIntrus.setTopLabel(
@@ -412,10 +409,10 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 
 		}
 	}
-	
-	private void choixEmplacementrobots(ActionEvent e, int i, int j) {
+
+	public void choixEmplacementrobots(ActionEvent e, int i, int j, JButton[][] buttons) {
 		if ((nbRobotsChoisi < nbCharacteres) && (cases[i][j] == 0)) {
-			set_case(i, j, "robot");
+			set_case(i, j, "robot", buttons);
 			nbRobotsChoisi++;
 
 			if (nbRobotsChoisi == nbCharacteres) {
@@ -428,7 +425,7 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 				FenetreChoixEmplacementRobots.setBottomLabel("		");
 			}
 		} else if (cases[i][j] == 1) {
-			set_case(i, j, "vide");
+			set_case(i, j, "vide", buttons);
 			if (nbRobotsChoisi == nbCharacteres) {
 				nbRobotsChoisi--;
 				FenetreChoixEmplacementRobots.setTopLabel(
@@ -445,9 +442,9 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 		}
 	}
 
-	public void choixEmplacementobstacles(ActionEvent e, int i, int j) {
+	public void choixEmplacementobstacles(ActionEvent e, int i, int j, JButton[][] buttons) {
 		if ((nbObstaclesChoisi < nbObstacles) && (cases[i][j] == 0)) {
-			set_case(i, j, "obstacle");
+			set_case(i, j, "obstacle", buttons);
 			nbObstaclesChoisi++;
 			if (nbObstaclesChoisi == nbObstacles) {
 				if (nbSortiesChoisies < nbSorties) {
@@ -470,7 +467,7 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 				FenetreChoixEmplacement.setBottomLabel("		");
 			}
 		} else if (cases[i][j] == 4) {
-			set_case(i, j, "vide");
+			set_case(i, j, "vide", buttons);
 			if (nbObstaclesChoisi == nbObstacles) {
 				nbObstaclesChoisi--;
 				FenetreChoixEmplacement.setTopLabel(
@@ -485,16 +482,16 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 			}
 
 		} else if (cases[i][j] == 5) {
-			choixEmplacementSorties(e, i, j);
+			choixEmplacementSorties(e, i, j, buttons);
 		} else if (cases[i][j] == 3) {
-			choixEmplacementArgents(e, i, j);
+			choixEmplacementArgents(e, i, j, buttons);
 		}
 	}
 
-	public void choixEmplacementSorties(ActionEvent e, int i, int j) {
+	public void choixEmplacementSorties(ActionEvent e, int i, int j, JButton[][] buttons) {
 		if ((nbSortiesChoisies < nbSorties) && ((i == 0) || (j == 0) || (i == n - 1) || (j == m - 1))
 				&& (cases[i][j] == 0)) {
-			set_case(i, j, "sortie");
+			set_case(i, j, "sortie", buttons);
 			nbSortiesChoisies++;
 			if (nbSortiesChoisies == nbSorties) {
 				if (nbSacsArgentChoisi < nbSacArgent) {
@@ -517,7 +514,7 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 				FenetreChoixEmplacement.setBottomLabel("		");
 			}
 		} else if (cases[i][j] == 5) {
-			set_case(i, j, "vide");
+			set_case(i, j, "vide", buttons);
 			if (nbSortiesChoisies == nbSorties) {
 				nbSortiesChoisies--;
 				FenetreChoixEmplacement.setTopLabel(
@@ -531,16 +528,16 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 				FenetreChoixEmplacement.setBottomLabel("		");
 			}
 		} else if (cases[i][j] == 3) {
-			choixEmplacementArgents(e, i, j);
+			choixEmplacementArgents(e, i, j, buttons);
 		} else if (cases[i][j] == 4) {
-			choixEmplacementobstacles(e, i, j);
-		} else if ((i != 0) && (j != 0) && (i != n - 1) && (j != m - 1)&&(nbSortiesChoisies < nbSorties))
+			choixEmplacementobstacles(e, i, j, buttons);
+		} else if ((i != 0) && (j != 0) && (i != n - 1) && (j != m - 1) && (nbSortiesChoisies < nbSorties))
 			FenetreChoixEmplacement.setBottomLabel("Les sorties doivent etre au bord de la zone geographique");
 	}
 
-	public void choixEmplacementArgents(ActionEvent e, int i, int j) {
+	public void choixEmplacementArgents(ActionEvent e, int i, int j, JButton[][] buttons) {
 		if ((nbSacsArgentChoisi < nbSacArgent) && (cases[i][j] == 0)) {
-			set_case(i, j, "argent");
+			set_case(i, j, "argent", buttons);
 			nbSacsArgentChoisi++;
 
 			if (nbSacsArgentChoisi == nbSacArgent) {
@@ -565,7 +562,7 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 				FenetreChoixEmplacement.setBottomLabel("		");
 			}
 		} else if (cases[i][j] == 3) {
-			set_case(i, j, "vide");
+			set_case(i, j, "vide", buttons);
 			if (nbSacsArgentChoisi == nbSacArgent) {
 				nbSacsArgentChoisi--;
 				FenetreChoixEmplacement.setTopLabel(
@@ -579,9 +576,9 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 				FenetreChoixEmplacement.setBottomLabel("		");
 			}
 		} else if (cases[i][j] == 5) {
-			choixEmplacementSorties(e, i, j);
+			choixEmplacementSorties(e, i, j, buttons);
 		} else if (cases[i][j] == 4) {
-			choixEmplacementobstacles(e, i, j);
+			choixEmplacementobstacles(e, i, j, buttons);
 		}
 	}
 
@@ -637,7 +634,7 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 	public int get_nb_obstacles_choisi() {
 		return nbObstaclesChoisi;
 	}
-	
+
 	public String get_etat() {
 		return etatJeux;
 	}
@@ -704,6 +701,14 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 			}
 		}
 		return x;
+	}
+
+	public Intrus getIntrus(int i, int j) {
+		return intrus[getNumIntrus(i, j)];
+	}
+
+	public Robot getRobot(int i, int j) {
+		return robots[getNumRobot(i, j)];
 	}
 
 	public boolean est_mouvement_possible_intrus(Intrus in, int x, int y) {
@@ -802,17 +807,15 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 
 	}
 
-	public void deselect(Charactere C) {
+	public void deselect(Charactere C, JButton[][] buttons) {
 
 		if (C.is_selected()) {
-			int x = C.getX();
-			int y = C.getY();
 			for (int i = 0; i < 4; i++) {
 				if (prochainsMouvements[i] != null) {
 					if (cases[prochainsMouvements[i].getX()][prochainsMouvements[i].getY()] == 5)
-						set_case(prochainsMouvements[i].getX(), prochainsMouvements[i].getY(), "sortie");
+						set_case(prochainsMouvements[i].getX(), prochainsMouvements[i].getY(), "sortie", buttons);
 					else
-						set_case(prochainsMouvements[i].getX(), prochainsMouvements[i].getY(), "restore");
+						set_case(prochainsMouvements[i].getX(), prochainsMouvements[i].getY(), "restore", buttons);
 				}
 			}
 			C.set_selected(false);
@@ -826,43 +829,59 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 		}
 	}
 
-	public void montrer_mouvemeent_possibles(Intrus in, Position[] mv) {
+	public void deselect_intrus(int i, int j, JButton[][] buttons) {
+		deselect(intrus[getNumIntrus(i, j)], buttons);
+	}
+
+	public void deselect_robot(int i, int j, JButton[][] buttons) {
+		deselect(robots[getNumRobot(i, j)], buttons);
+	}
+
+	public void set_intrus_selected(int i, int j) {
+		intrus[getNumIntrus(i, j)].set_selected(true);
+	}
+
+	public void set_robot_selected(int i, int j) {
+		robots[getNumRobot(i, j)].set_selected(true);
+	}
+
+	public void montrer_mouvemeent_possibles(Intrus in, Position[] mv, JButton[][] buttons) {
 		for (int k = 0; k < nbCharacteres; k++) {
 			if (intrus[k].is_selected()) {
-				deselect(intrus[k]);
+				deselect(intrus[k], buttons);
 			}
 		}
 		for (int i = 0; i < 4; i++) {
 			if (mv[i] != null) {
 				if (cases[mv[i].getX()][mv[i].getY()] == 5)
-					set_case(mv[i].getX(), mv[i].getY(), "highlightedJ2Exit");
+					set_case(mv[i].getX(), mv[i].getY(), "highlightedJ2Exit", buttons);
 				else
-					set_case(mv[i].getX(), mv[i].getY(), "highlightedJ2");
+					set_case(mv[i].getX(), mv[i].getY(), "highlightedJ2", buttons);
 			}
 		}
 		prochainsMouvements = mv;
 		etatJeux = "tourJoueur2Mouvement";
 	}
 
-	public void montrer_mouvemeent_possibles(Robot R, Position[] mv) {
+	public void montrer_mouvemeent_possibles(Robot R, Position[] mv, JButton[][] buttons) {
 		for (int k = 0; k < nbCharacteres; k++) {
 			if (robots[k].is_selected()) {
-				deselect(robots[k]);
+				deselect(robots[k], buttons);
 			}
 		}
 		for (int i = 0; i < 4; i++) {
 			if (mv[i] != null) {
-				set_case(mv[i].getX(), mv[i].getY(), "highlightedJ1");
+				set_case(mv[i].getX(), mv[i].getY(), "highlightedJ1", buttons);
 			}
 		}
 		prochainsMouvements = mv;
 		etatJeux = "tourJoueur1Mouvement";
 	}
 
-	public void annuler_montrer_mouvemeent_possibles(Intrus in, Position[] mv) {
+	public void annuler_montrer_mouvemeent_possibles(Intrus in, Position[] mv, JButton[][] buttons) {
 		for (int i = 0; i < 4; i++) {
 			if (!mv[i].equals(null)) {
-				set_case(mv[i].getX(), mv[i].getY(), "restore");
+				set_case(mv[i].getX(), mv[i].getY(), "restore", buttons);
 			}
 		}
 	}
@@ -923,34 +942,34 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 		return casesAdjacentes;
 	}
 
-	public void attrapper_argent(Intrus in, Position p) {
+	public void attrapper_argent(Intrus in, Position p, JButton[][] buttons) {
 		if (cases[p.getX()][p.getY()] == 3) {
-			set_case(p.getX(), p.getY(), "argentVolee");
+			set_case(p.getX(), p.getY(), "argentVolee", buttons);
 			in.recupererArgent(p);
 		}
 	}
 
-	public void restaurer_argent(Intrus in) {
+	public void restaurer_argent(Intrus in, JButton[][] buttons) {
 		if (in.getNbSacsArgent() == 2) {
-			set_case(in.getPosSac2().getX(), in.getPosSac2().getY(), "argent");
+			set_case(in.getPosSac2().getX(), in.getPosSac2().getY(), "argent", buttons);
 			in.retournerSac2();
 		}
 		if (in.getNbSacsArgent() == 1) {
-			set_case(in.getPosSac1().getX(), in.getPosSac1().getY(), "argent");
+			set_case(in.getPosSac1().getX(), in.getPosSac1().getY(), "argent", buttons);
 			in.retournerSac1();
 		}
 	}
 
-	public void attrapper_intrus(Robot R, Position p) {
+	public void attrapper_intrus(Robot R, Position p, JButton[][] buttons) {
 		if (cases[p.getX()][p.getY()] == 2) {
-			set_case(p.getX(), p.getY(), "intrusAttrappe");
+			set_case(p.getX(), p.getY(), "intrusAttrappe", buttons);
 			R.AttraperIntrus();
-			restaurer_argent(intrus[getNumIntrus(p.getX(), p.getY())]);
+			restaurer_argent(intrus[getNumIntrus(p.getX(), p.getY())], buttons);
 			nbIntrusAttrappes++;
 		}
 	}
 
-	public void verifier_argent(Intrus in) {
+	public void verifier_argent(Intrus in, JButton[][] buttons) {
 		boolean existe = false;
 		if (in.getNbSacsArgent() < 2) {
 			Position[] adjacentes = get_cases_adjacentes(in.getX(), in.getY());
@@ -958,51 +977,51 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 				if (adjacentes[i] != null)
 					if ((cases[adjacentes[i].getX()][adjacentes[i].getY()] == 3) && (!existe)) {
 						existe = true;
-						attrapper_argent(in, adjacentes[i]);
+						attrapper_argent(in, adjacentes[i], buttons);
 						if (in.getNbSacsArgent() == 0)
-							set_case(in.getX(), in.getY(), "intrus");
+							set_case(in.getX(), in.getY(), "intrus", buttons);
 						else if (in.getNbSacsArgent() == 1)
-							set_case(in.getX(), in.getY(), "intrus1");
+							set_case(in.getX(), in.getY(), "intrus1", buttons);
 						else if (in.getNbSacsArgent() == 2)
-							set_case(in.getX(), in.getY(), "intrus2");
+							set_case(in.getX(), in.getY(), "intrus2", buttons);
 					}
 		}
 	}
 
-	public void verifier_intrus(Robot R) {
+	public void verifier_intrus(Robot R, JButton[][] buttons) {
 
 		boolean existe = false;
 		Position[] adjacentes = get_cases_adjacentes(R.getX(), R.getY());
 		for (int i = 0; i < 8; i++)
 			if (adjacentes[i] != null)
 				if ((cases[adjacentes[i].getX()][adjacentes[i].getY()] == 2) && (!existe)) {
-					attrapper_intrus(R, adjacentes[i]);
+					attrapper_intrus(R, adjacentes[i], buttons);
 					intrus[getNumIntrus(adjacentes[i].getX(), adjacentes[i].getY())].se_fait_attrapper();
 					existe = true;
 				}
 	}
 
-	public void move_intrus(Intrus in, int x, int y) {
-		deselect(in);
+	public void move_intrus(Intrus in, int x, int y, JButton[][] buttons) {
+		deselect(in, buttons);
 		int i = in.getX();
 		int j = in.getY();
 		if (cases[x][y] == 0) {
 			if (in.getNbSacsArgent() == 0)
-				set_case(x, y, "intrus");
+				set_case(x, y, "intrus", buttons);
 			else if (in.getNbSacsArgent() == 1)
-				set_case(x, y, "intrus1");
+				set_case(x, y, "intrus1", buttons);
 			else if (in.getNbSacsArgent() == 2)
-				set_case(x, y, "intrus2");
+				set_case(x, y, "intrus2", buttons);
 
-			set_case(i, j, "vide");
+			set_case(i, j, "vide", buttons);
 
 			in.move(x, y);
 
-			verifier_argent(in);
+			verifier_argent(in, buttons);
 		}
 
 		else if ((cases[x][y] == 5) && (in.getNbSacsArgent() > 0)) {
-			set_case(i, j, "vide");
+			set_case(i, j, "vide", buttons);
 			in.quitter_la_zone();
 			nbArgentVole += in.getNbSacsArgent();
 			nbIntrusEchappes++;
@@ -1012,7 +1031,7 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 			etatJeux = "finJeux";
 			FenetreJeux.setTopLabel("fin");
 			set_gagnant();
-			afficher_resultats();
+			// afficher_resultats();
 		} else {
 			etatJeux = "tourJoueur1";
 			FenetreJeux.setTopLabel("tourJ1");
@@ -1032,128 +1051,37 @@ public class ZoneGeographique extends JPanel implements ActionListener {
 		return existe;
 	}
 
-	public void move_robot(Robot R, int x, int y) {
-		deselect(R);
+	public void move_robot(Robot R, int x, int y, JButton[][] buttons) {
+		deselect(R, buttons);
 		int i = R.getX();
 		int j = R.getY();
 
-		set_case(x, y, "robot");
-		set_case(i, j, "vide");
+		set_case(x, y, "robot", buttons);
+		set_case(i, j, "vide", buttons);
 		R.move(x, y);
 
-		verifier_intrus(R);
+		verifier_intrus(R, buttons);
 
-		if ((!existe_mouvement_possible_intrus()) || (nbIntrusAttrappes+nbIntrusEchappes==nbCharacteres)){
+		if ((!existe_mouvement_possible_intrus()) || (nbIntrusAttrappes + nbIntrusEchappes == nbCharacteres)) {
 			etatJeux = "finJeux";
 			FenetreJeux.setTopLabel("fin");
 			set_gagnant();
-			afficher_resultats();
-		}
-		else {
+			// afficher_resultats();
+		} else {
 			etatJeux = "tourJoueur2";
 			FenetreJeux.setTopLabel("tourJ2");
 		}
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
-				if ((e.getSource() == buttons[i][j]) && (cases[i][j] < 3)
-						&& ((etatJeux == "choixEmplacementsrobots") || (etatJeux == "choixEmplacementsintrus"))) {
-					if ((nbRobotsChoisi < nbCharacteres) || (nbintruschoisi < nbCharacteres) || (cases[i][j] == 2)
-							|| (cases[i][j] == 1)) {
-						if (etatJeux == "choixEmplacementsrobots") {
-							if (Bonne_Position_Robot(i, j)) {
-								choixEmplacementrobots(e, i, j);
-							} else if((!Bonne_Position_Robot(i, j))&&(nbRobotsChoisi < nbCharacteres)) {
-								FenetreChoixEmplacementRobots.setBottomLabel(
-										"La position de ce robot est au bord de la zone geographique ou bien proche d'une sortie");
-							}
-						} else if ((etatJeux == "choixEmplacementsintrus")) {
-							if (Bonne_Position_Intrus(i, j)) {
-								choixEmplacementintrus(e, i, j);
-							} else if((!Bonne_Position_Intrus(i, j))&&(nbintruschoisi < nbCharacteres)) {
-								FenetreChoixEmplacementIntrus
-										.setBottomLabel("Les intrus doivent etre au bord de la zone geogeraphique");
-							}
-						}
-					}
-				} else if (e.getSource() == buttons[i][j]) {
-					if (etatJeux == "choixEmplacementsSorties") {
-						choixEmplacementSorties(e, i, j);
-					} else if (etatJeux == "choixEmplacementsSacArgent") {
-						if (cases[i][j] == 0) {
-							if (Bonne_Position_Sac_Argent(i, j)) {
-								choixEmplacementArgents(e, i, j);
-							} else if((!Bonne_Position_Sac_Argent(i, j))&&(nbSacsArgentChoisi < nbSacArgent)) {
-								FenetreChoixEmplacement.setBottomLabel(
-										"Emplacement invalide, choisir une autre position");
-							}
-						} else {
-							choixEmplacementArgents(e, i, j);
-						}
-					} else if (etatJeux == "choixEmplacementsobstacle") {
-						if (cases[i][j] == 0) {
-							if (Bonne_Position_Obstacle(i, j)) {
-								choixEmplacementobstacles(e, i, j);
-							} else if((!Bonne_Position_Obstacle(i, j))&&(nbObstaclesChoisi < nbObstacles)){
-								FenetreChoixEmplacement.setBottomLabel(
-										"Emplacement invalide, cet obstacle est directement devant une sortie ou bien proche d'une source d'argent");
-							}
-						} else {
-							choixEmplacementobstacles(e, i, j);
-						}
-					}
-				}
-
-				// lancement du jeux ...
-				// tour Joueur 2 (intrus)
-				if ((e.getSource() == buttons[i][j]) && (cases[i][j] == 2)
-						&& ((etatJeux == "tourJoueur2") || (etatJeux.equals("tourJoueur2Mouvement")))) {
-					if (intrus[getNumIntrus(i, j)].is_selected()) {
-						deselect(intrus[getNumIntrus(i, j)]);
-
-					} else {
-						montrer_mouvemeent_possibles(intrus[getNumIntrus(i, j)],
-								get_mouvements_possibles(intrus[getNumIntrus(i, j)]));
-						intrus[getNumIntrus(i, j)].set_selected(true);
-					}
-				}
-				if ((e.getSource() == buttons[i][j]) && (etatJeux.equals("tourJoueur2Mouvement"))
-						&& (est_un_prochain_mouvement(i, j))) {
-					move_intrus(get_selected_intrus(), i, j);
-				}
-
-				// tour Joueur 1 (robots)
-				if ((e.getSource() == buttons[i][j]) && (cases[i][j] == 1)
-						&& ((etatJeux == "tourJoueur1") || (etatJeux.equals("tourJoueur1Mouvement")))) {
-					if (robots[getNumRobot(i, j)].is_selected()) {
-						deselect(robots[getNumRobot(i, j)]);
-
-					} else {
-						montrer_mouvemeent_possibles(robots[getNumRobot(i, j)],
-								get_mouvements_possibles(robots[getNumRobot(i, j)]));
-						robots[getNumRobot(i, j)].set_selected(true);
-					}
-				}
-				if ((e.getSource() == buttons[i][j]) && (etatJeux.equals("tourJoueur1Mouvement"))
-						&& (est_un_prochain_mouvement(i, j))) {
-					move_robot(get_selected_robot(), i, j);
-				}
-			}
-		}
-	}
-
 	public void set_gagnant() {
 		joueurGagnant = 0;
-		
+
 		if (etatJeux.equals("finJeux")) {
-			if ((nbIntrusAttrappes == nbCharacteres) || (nbIntrusEchappes == 0) )
+			if ((nbIntrusAttrappes == nbCharacteres) || (nbIntrusEchappes == 0))
 				joueurGagnant = 1;
 			else
 				joueurGagnant = 2;
-		}		
+		}
 	}
 
 	public int get_num_gagnant() {

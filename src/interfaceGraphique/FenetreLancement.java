@@ -1,7 +1,5 @@
 package interfaceGraphique;
 
-import zoneGeographique.*;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -14,6 +12,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+
+import zoneGeographique.ZoneGeographique;
 
 public class FenetreLancement extends JFrame implements ActionListener {
 
@@ -75,7 +75,7 @@ public class FenetreLancement extends JFrame implements ActionListener {
 		if (e.getSource() == partieRapide) {
 			// this.setVisible(false);
 			FenetreSaisieNomJoueur fenetreSaisieNomJoueur1 = new FenetreSaisieNomJoueur(
-					new ZoneGeographique(13, 13, 3, 7, 3, 4), true);
+					new ZoneGeographique(13, 13, 3, 7, 3, 4), true, null);
 			dispose();
 		}
 	}

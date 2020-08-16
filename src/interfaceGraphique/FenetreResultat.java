@@ -1,7 +1,5 @@
 package interfaceGraphique;
 
-import zoneGeographique.*;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -9,7 +7,6 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -17,6 +14,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import zoneGeographique.ZoneGeographique;
 
 public class FenetreResultat extends JFrame implements ActionListener {
 
@@ -86,17 +85,8 @@ public class FenetreResultat extends JFrame implements ActionListener {
 			System.exit(0);
 		}
 		if (e.getSource() == newGameButton) {
-
-			// MainClass premiereFenetre = new MainClass();
-
-			try {
-				Runtime.getRuntime().exec("java -jar jeux-zone-geographique.jar");
-				System.exit(-1);
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-
+			dispose();
+			FenetreLancement fenetreLancement = new FenetreLancement();
 		}
 	}
 

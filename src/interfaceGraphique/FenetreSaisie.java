@@ -1,7 +1,5 @@
 package interfaceGraphique;
 
-import zoneGeographique.*;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -13,6 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import zoneGeographique.ZoneGeographique;
 
 public class FenetreSaisie extends JFrame implements ActionListener {
 
@@ -43,11 +43,9 @@ public class FenetreSaisie extends JFrame implements ActionListener {
 		ligneLabel.setBounds(40, 50, 450, 25);
 		ligneLabel.setFont(new Font("Arial", Font.BOLD, 14));
 
-		
 		JLabel colonneLabel = new JLabel("Nombre de colonnes de la zone geographique   (12-30)");
 		colonneLabel.setBounds(40, 80, 420, 25);
 		colonneLabel.setFont(new Font("Arial", Font.BOLD, 14));
-
 
 		ligneText = new JTextField(20);
 		ligneText.setBounds(460, 50, 100, 25);
@@ -58,14 +56,12 @@ public class FenetreSaisie extends JFrame implements ActionListener {
 		nbcLabel.setBounds(40, 140, 450, 25);
 		nbcLabel.setFont(new Font("Arial", Font.BOLD, 14));
 
-		
 		nbcText = new JTextField(20);
 		nbcText.setBounds(460, 140, 100, 25);
 
 		JLabel nbSortieLabel = new JLabel("Saisir le nombre de sorties de la zone (1-5)");
 		nbSortieLabel.setBounds(40, 170, 450, 25);
 		nbSortieLabel.setFont(new Font("Arial", Font.BOLD, 14));
-
 
 		nbSortieText = new JTextField(20);
 		nbSortieText.setBounds(460, 170, 100, 25);
@@ -74,7 +70,6 @@ public class FenetreSaisie extends JFrame implements ActionListener {
 		nbSacArgentLabel.setBounds(40, 200, 450, 25);
 		nbSacArgentLabel.setFont(new Font("Arial", Font.BOLD, 14));
 
-
 		nbSacArgentText = new JTextField(20);
 		nbSacArgentText.setBounds(460, 200, 100, 25);
 
@@ -82,15 +77,13 @@ public class FenetreSaisie extends JFrame implements ActionListener {
 		nbobstaclesLabel.setBounds(40, 240, 450, 25);
 		nbobstaclesLabel.setFont(new Font("Arial", Font.BOLD, 14));
 
-
 		nbobstaclesText = new JTextField(20);
 		nbobstaclesText.setBounds(460, 240, 100, 25);
 
 		errorLabel = new JLabel("");
 		errorLabel.setBounds(40, 280, 750, 25);
-		errorLabel.setForeground(Color.red.darker());	
+		errorLabel.setForeground(Color.red.darker());
 		errorLabel.setFont(new Font("Arial", Font.BOLD, 12));
-
 
 		button = new JButton("Suivant");
 		button.setFont(new Font("Aerial", Font.BOLD, 17));
@@ -171,7 +164,7 @@ public class FenetreSaisie extends JFrame implements ActionListener {
 					errorLabel.setText("Saisie reessite");
 					// setVisible(false);
 					FenetreSaisieNomJoueur fenetreSaisieJoueur1 = new FenetreSaisieNomJoueur(
-							new ZoneGeographique(n, m, nbSorties, nbSacArgent, nbCh, nbobstacles), true);
+							new ZoneGeographique(n, m, nbSorties, nbSacArgent, nbCh, nbobstacles), true, null);
 					dispose();
 				}
 			} catch (NumberFormatException x) {

@@ -1,7 +1,5 @@
 package interfaceGraphique;
 
-import zoneGeographique.*;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -16,6 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import zoneGeographique.ZoneGeographique;
+
 public class FenetreSaisieNomJoueur extends JFrame implements ActionListener {
 
 	private JPanel saisieNomJ;
@@ -24,15 +24,18 @@ public class FenetreSaisieNomJoueur extends JFrame implements ActionListener {
 	private JButton button;
 	private ZoneGeographique zoneGeo;
 	private String nomJ;
+	private JButton[][] buttons;
 
 	private boolean Joueur1; // permet de tester si la saisie est
 								// pour le premier ou deuxieme joueur
 
-	public FenetreSaisieNomJoueur(ZoneGeographique zone, boolean Joueur1) {
+	public FenetreSaisieNomJoueur(ZoneGeographique zone, boolean Joueur1, JButton[][] buttons) {
 
 		this.Joueur1 = Joueur1;
 
 		zoneGeo = zone;
+		this.buttons = buttons;
+
 		saisieNomJ = new JPanel(null);
 		JLabel joueurLabel = new JLabel("Joueur 2 : saisir votre nom :");
 		if (Joueur1) {
@@ -44,7 +47,6 @@ public class FenetreSaisieNomJoueur extends JFrame implements ActionListener {
 		nomJText = new JTextField(40);
 		nomJText.setBounds(40, 80, 200, 25);
 
-		
 		Image img = null;
 		if (Joueur1)
 			img = new ImageIcon(getClass().getResource("/icones/robot.png")).getImage();
@@ -58,7 +60,6 @@ public class FenetreSaisieNomJoueur extends JFrame implements ActionListener {
 
 		saisieNomJ.add(label);
 
-		
 		errorLabel = new JLabel("");
 		errorLabel.setForeground(Color.red.darker());
 		errorLabel.setBounds(40, 120, 500, 25);
@@ -97,8 +98,8 @@ public class FenetreSaisieNomJoueur extends JFrame implements ActionListener {
 			// fenetre choix emplacements intrus ...
 			if (!Joueur1) {
 				zoneGeo.setNomJoueur2(nomJ);
-				FenetreChoixEmplacementIntrus fenetreChoixEmplacementIntrus = new FenetreChoixEmplacementIntrus(
-						zoneGeo);
+				FenetreChoixEmplacementIntrus fenetreChoixEmplacementIntrus = new FenetreChoixEmplacementIntrus(zoneGeo,
+						buttons);
 			} else {
 				zoneGeo.setNomJoueur1(nomJ);
 				FenetreChoixEmplacement fenetreChoixEmplacement = new FenetreChoixEmplacement(zoneGeo);
