@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import zoneGeographique.Jeux;
 import zoneGeographique.ZoneGeographique;
 
 public class FenetreChoixEmplacementIntrus extends JFrame implements ActionListener {
@@ -33,7 +34,6 @@ public class FenetreChoixEmplacementIntrus extends JFrame implements ActionListe
 		for (int i = 0; i < zoneGeo.get_nb_lignes(); i++) {
 			for (int j = 0; j < zoneGeo.get_nb_colonnes(); j++) {
 				buttons[i][j].addActionListener(this);
-
 				grid.add(buttons[i][j]);
 			}
 		}
@@ -92,17 +92,14 @@ public class FenetreChoixEmplacementIntrus extends JFrame implements ActionListe
 				// commencer le jeux ...
 				zoneGeo.enregistrer_choix(); // creation des objets de type Robot et Intrus
 				zoneGeo.set_etat("tourJoueur2");
-				// setVisible(false);
-				FenetreJeux fenetreJeux = new FenetreJeux(zoneGeo, buttons);
+				Jeux.commencer_jeux();
 				dispose();
 			}
 		}
 
 		for (int i = 0; i < zoneGeo.get_nb_lignes(); i++) {
 			for (int j = 0; j < zoneGeo.get_nb_colonnes(); j++) {
-				if ((e.getSource() == buttons[i][j])
-						&& ((zoneGeo.get_etat() == "choixEmplacementsrobots")
-								|| (zoneGeo.get_etat() == "choixEmplacementsintrus"))
+				if ((e.getSource() == buttons[i][j]) && (zoneGeo.get_etat() == "choixEmplacementsintrus")
 						&& ((zoneGeo.get_case(i, j) == 0) || (zoneGeo.get_case(i, j) == 2))) {
 					if (zoneGeo.Bonne_Position_Intrus(i, j)) {
 						zoneGeo.choixEmplacementintrus(e, i, j, buttons);
@@ -122,5 +119,13 @@ public class FenetreChoixEmplacementIntrus extends JFrame implements ActionListe
 
 	public static void setBottomLabel(String s) {
 		bottomLabel.setText(s);
+	}
+
+	public ZoneGeographique getZoneGeo() {
+		return zoneGeo;
+	}
+
+	public JButton[][] getButtons() {
+		return buttons;
 	}
 }

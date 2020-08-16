@@ -16,7 +16,6 @@ import interfaceGraphique.FenetreChoixEmplacement;
 import interfaceGraphique.FenetreChoixEmplacementIntrus;
 import interfaceGraphique.FenetreChoixEmplacementRobots;
 import interfaceGraphique.FenetreJeux;
-import interfaceGraphique.FenetreResultat;
 import position.Position;
 
 public class ZoneGeographique {
@@ -30,7 +29,7 @@ public class ZoneGeographique {
 	private int nbintruschoisi = 0;
 
 	private String nomJoueur1, nomJoueur2;
-	private int joueurGagnant;
+	private int joueurGagnant = 0;
 
 	private int[][] cases;
 
@@ -67,6 +66,33 @@ public class ZoneGeographique {
 		nomJoueur2 = "";
 
 		cases = new int[n][m];
+
+	}
+
+	public void reset_partie() {
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				cases[i][j] = 0;
+			}
+		}
+
+		robots = null;
+		intrus = null;
+		prochainsMouvements = null;
+
+		etatJeux = "DebutConfiguration";
+
+		nbArgentVole = 0;
+		nbIntrusAttrappes = 0;
+		nbIntrusEchappes = 0;
+
+		nbSortiesChoisies = 0;
+		nbSacsArgentChoisi = 0;
+		nbObstaclesChoisi = 0;
+		nbRobotsChoisi = 0;
+		nbintruschoisi = 0;
+
+		joueurGagnant = 0;
 
 	}
 
@@ -723,7 +749,7 @@ public class ZoneGeographique {
 		Position[] adjacentes = get_cases_adjacentes(x, y);
 		for (int i = 0; i < 8; i++)
 			if (adjacentes[i] != null) {
-				if (cases[adjacentes[i].getX()][adjacentes[i].getY()] == 1)
+				if ((cases[adjacentes[i].getX()][adjacentes[i].getY()] == 1) && (cases[x][y] != 5))
 					possible = false;
 			}
 
@@ -1005,6 +1031,7 @@ public class ZoneGeographique {
 		deselect(in, buttons);
 		int i = in.getX();
 		int j = in.getY();
+
 		if (cases[x][y] == 0) {
 			if (in.getNbSacsArgent() == 0)
 				set_case(x, y, "intrus", buttons);
@@ -1031,7 +1058,6 @@ public class ZoneGeographique {
 			etatJeux = "finJeux";
 			FenetreJeux.setTopLabel("fin");
 			set_gagnant();
-			// afficher_resultats();
 		} else {
 			etatJeux = "tourJoueur1";
 			FenetreJeux.setTopLabel("tourJ1");
@@ -1088,6 +1114,10 @@ public class ZoneGeographique {
 		return joueurGagnant;
 	}
 
+	public int getNbArgentVole() {
+		return nbArgentVole;
+	}
+
 	public String get_nom_joueur_gagnant() {
 		String gagnant = "";
 		if (joueurGagnant == 1)
@@ -1095,11 +1125,6 @@ public class ZoneGeographique {
 		else if (joueurGagnant == 2)
 			gagnant = nomJoueur2;
 		return gagnant;
-	}
-
-	public void afficher_resultats() {
-		// fenetre resultat
-		FenetreResultat fenetreResultat = new FenetreResultat(this);
 	}
 
 }

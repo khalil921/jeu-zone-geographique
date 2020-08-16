@@ -15,13 +15,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import zoneGeographique.Jeux;
 import zoneGeographique.ZoneGeographique;
 
 public class FenetreResultat extends JFrame implements ActionListener {
 
 	private ZoneGeographique zoneGeo;
 	private JPanel panel;
-	private JButton newGameButton, exitButton;
+	private JButton nouvellePartieButton, nouvellePartieJoueursButton, relancerPartieButton, exitButton;
 
 	public FenetreResultat(ZoneGeographique zone) {
 		zoneGeo = zone;
@@ -41,26 +42,44 @@ public class FenetreResultat extends JFrame implements ActionListener {
 
 		JPanel bottomPanel = new JPanel(new FlowLayout());
 
+		nouvellePartieButton = new JButton("Changer Joueurs");
+		nouvellePartieButton.setFont(new Font("Aerial", Font.BOLD, 13));
+		nouvellePartieButton.setBackground(new Color(32, 74, 135));
+		nouvellePartieButton.setForeground(Color.WHITE);
+		nouvellePartieButton.addActionListener(this);
+		bottomPanel.add(nouvellePartieButton);
+
+		nouvellePartieJoueursButton = new JButton("Nouvelle Partie");
+		nouvellePartieJoueursButton.setFont(new Font("Aerial", Font.BOLD, 13));
+		nouvellePartieJoueursButton.setBackground(new Color(32, 74, 135));
+		nouvellePartieJoueursButton.setForeground(Color.WHITE);
+		nouvellePartieJoueursButton.addActionListener(this);
+		bottomPanel.add(nouvellePartieJoueursButton);
+
+		relancerPartieButton = new JButton("Relancer partie");
+		relancerPartieButton.setFont(new Font("Aerial", Font.BOLD, 13));
+		relancerPartieButton.setBackground(new Color(32, 74, 135));
+		relancerPartieButton.setForeground(Color.WHITE);
+		relancerPartieButton.addActionListener(this);
+		bottomPanel.add(relancerPartieButton);
+
 		exitButton = new JButton("Quitter");
-		exitButton.setFont(new Font("Aerial", Font.BOLD, 17));
+		exitButton.setFont(new Font("Aerial", Font.BOLD, 13));
 		exitButton.setBackground(new Color(32, 74, 135));
 		exitButton.setForeground(Color.WHITE);
 		exitButton.addActionListener(this);
 		bottomPanel.add(exitButton);
 
-		newGameButton = new JButton("Nouvelle partie");
-		newGameButton.setFont(new Font("Aerial", Font.BOLD, 17));
-		newGameButton.setBackground(new Color(32, 74, 135));
-		newGameButton.setForeground(Color.WHITE);
-		newGameButton.addActionListener(this);
-		bottomPanel.add(newGameButton);
-
 		add(bottomPanel, BorderLayout.SOUTH);
-		setSize(700, 450);
+		setSize(800, 500);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Jeu multi-joueurs pour la surveillance d une zone geographique");
 		setVisible(true);
+
+		// prints used memory in console .... remove later
+		System.out.println("MB :"
+				+ (double) (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / (1024 * 1024));
 
 	}
 
@@ -79,14 +98,26 @@ public class FenetreResultat extends JFrame implements ActionListener {
 		panel.add(label);
 	}
 
+	public ZoneGeographique getZoneGeo() {
+		return zoneGeo;
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == exitButton) {
 			System.exit(0);
 		}
-		if (e.getSource() == newGameButton) {
+		if (e.getSource() == relancerPartieButton) {
 			dispose();
-			FenetreLancement fenetreLancement = new FenetreLancement();
+			Jeux.relancer_partie();
+		}
+		if (e.getSource() == nouvellePartieButton) {
+			dispose();
+			Jeux.nouvelle_partie(false);
+		}
+		if (e.getSource() == nouvellePartieJoueursButton) {
+			dispose();
+			Jeux.nouvelle_partie(true);
 		}
 	}
 

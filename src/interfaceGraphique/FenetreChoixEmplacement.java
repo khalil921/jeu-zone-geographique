@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import zoneGeographique.Jeux;
 import zoneGeographique.ZoneGeographique;
 
 public class FenetreChoixEmplacement extends JFrame implements ActionListener {
@@ -27,9 +28,12 @@ public class FenetreChoixEmplacement extends JFrame implements ActionListener {
 	private JPanel grid;
 	private JButton[][] buttons;
 
-	public FenetreChoixEmplacement(ZoneGeographique zone) {
+	private boolean estNouvellePartie;
+
+	public FenetreChoixEmplacement(ZoneGeographique zone, boolean estNouvellePartie) {
 
 		zoneGeo = zone;
+		this.estNouvellePartie = estNouvellePartie;
 
 		setLayout(new BorderLayout());
 
@@ -133,7 +137,7 @@ public class FenetreChoixEmplacement extends JFrame implements ActionListener {
 					bottomLabel
 							.setText("Vous n'avez pas encore choisi les " + zoneGeo.get_nb_obstacles() + " obstacles");
 				} else {
-					FenetreChoixEmplacementRobots fenetreRobots = new FenetreChoixEmplacementRobots(zoneGeo, buttons);
+					Jeux.passer_choix_robots(estNouvellePartie);
 					dispose();
 				}
 			}
@@ -154,8 +158,7 @@ public class FenetreChoixEmplacement extends JFrame implements ActionListener {
 								zoneGeo.choixEmplacementArgents(e, i, j, buttons);
 							} else if ((!zoneGeo.Bonne_Position_Sac_Argent(i, j))
 									&& (zoneGeo.get_nb_argent_choisi() < zoneGeo.get_nb_argent())) {
-								FenetreChoixEmplacement
-										.setBottomLabel("Emplacement invalide, choisir une autre position");
+								bottomLabel.setText("Emplacement invalide, choisir une autre position");
 							}
 						} else {
 							zoneGeo.choixEmplacementArgents(e, i, j, buttons);
@@ -166,7 +169,7 @@ public class FenetreChoixEmplacement extends JFrame implements ActionListener {
 								zoneGeo.choixEmplacementobstacles(e, i, j, buttons);
 							} else if ((!zoneGeo.Bonne_Position_Obstacle(i, j))
 									&& (zoneGeo.get_nb_obstacles_choisi() < zoneGeo.get_nb_obstacles())) {
-								FenetreChoixEmplacement.setBottomLabel(
+								bottomLabel.setText(
 										"Emplacement invalide, cet obstacle est directement devant une sortie ou bien proche d'une source d'argent");
 							}
 						} else {
@@ -186,4 +189,11 @@ public class FenetreChoixEmplacement extends JFrame implements ActionListener {
 		bottomLabel.setText(s);
 	}
 
+	public ZoneGeographique getZoneGeo() {
+		return zoneGeo;
+	}
+
+	public JButton[][] getButtons() {
+		return buttons;
+	}
 }

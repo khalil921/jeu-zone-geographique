@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import zoneGeographique.Jeux;
 import zoneGeographique.ZoneGeographique;
 
 public class FenetreChoixEmplacementRobots extends JFrame implements ActionListener {
@@ -22,7 +23,11 @@ public class FenetreChoixEmplacementRobots extends JFrame implements ActionListe
 	private JButton button;
 	private JButton[][] buttons;
 
-	public FenetreChoixEmplacementRobots(ZoneGeographique zone, JButton[][] buttons) {
+	private boolean estNouvellePartie;
+
+	public FenetreChoixEmplacementRobots(ZoneGeographique zone, JButton[][] buttons, boolean estNouvellePartie) {
+
+		this.estNouvellePartie = estNouvellePartie;
 		setLayout(new BorderLayout());
 		zoneGeo = zone;
 		zoneGeo.set_etat("choixEmplacementsrobots");
@@ -33,7 +38,6 @@ public class FenetreChoixEmplacementRobots extends JFrame implements ActionListe
 		for (int i = 0; i < zoneGeo.get_nb_lignes(); i++) {
 			for (int j = 0; j < zoneGeo.get_nb_colonnes(); j++) {
 				buttons[i][j].addActionListener(this);
-
 				grid.add(buttons[i][j]);
 			}
 		}
@@ -89,18 +93,20 @@ public class FenetreChoixEmplacementRobots extends JFrame implements ActionListe
 			if (zoneGeo.getnbRobotsChoisi() < zoneGeo.getnbCharacteres()) {
 				bottomLabel.setText("Vous n'avez pas encore choisi les " + zoneGeo.getnbCharacteres() + " robots");
 			} else {
-				// lancer la fenetre de saisie du nom du deuxieme joueuer
-				// setVisible(false);
-				FenetreSaisieNomJoueur saisieNomJoueur2 = new FenetreSaisieNomJoueur(zoneGeo, false, buttons);
+				if (estNouvellePartie) {
+					// lancer la fenetre de saisie du nom du deuxieme joueuer
+					Jeux.passer_saisie_joueur2();
+				} else {
+					Jeux.passer_choix_intrus(estNouvellePartie);
+				}
 				dispose();
 			}
 		}
 
 		for (int i = 0; i < zoneGeo.get_nb_lignes(); i++) {
 			for (int j = 0; j < zoneGeo.get_nb_colonnes(); j++) {
-				if ((e.getSource() == buttons[i][j])
-						&& ((zoneGeo.get_etat() == "choixEmplacementsrobots")
-								|| (zoneGeo.get_etat() == "choixEmplacementsintrus"))
+				if ((e.getSource() == buttons[i][j]) && (zoneGeo.get_etat() == "choixEmplacementsrobots")
+
 						&& ((zoneGeo.get_case(i, j) == 0) || (zoneGeo.get_case(i, j) == 1))) {
 					if (zoneGeo.Bonne_Position_Robot(i, j)) {
 						zoneGeo.choixEmplacementrobots(e, i, j, buttons);
@@ -120,5 +126,13 @@ public class FenetreChoixEmplacementRobots extends JFrame implements ActionListe
 
 	public static void setBottomLabel(String s) {
 		bottomLabel.setText(s);
+	}
+
+	public ZoneGeographique getZoneGeo() {
+		return zoneGeo;
+	}
+
+	public JButton[][] getButtons() {
+		return buttons;
 	}
 }

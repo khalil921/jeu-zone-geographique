@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import zoneGeographique.Jeux;
 import zoneGeographique.ZoneGeographique;
 
 public class FenetreJeux extends JFrame implements ActionListener {
@@ -85,6 +86,10 @@ public class FenetreJeux extends JFrame implements ActionListener {
 		}
 	}
 
+	public ZoneGeographique getZoneGeo() {
+		return zoneGeo;
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -111,7 +116,7 @@ public class FenetreJeux extends JFrame implements ActionListener {
 						zoneGeo.move_intrus(zoneGeo.get_selected_intrus(), i, j, buttons);
 						if (!zoneGeo.get_nom_joueur_gagnant().equals("")) {
 							dispose();
-							zoneGeo.afficher_resultats();
+							Jeux.afficher_resultat();
 						}
 					}
 
@@ -132,7 +137,7 @@ public class FenetreJeux extends JFrame implements ActionListener {
 						zoneGeo.move_robot(zoneGeo.get_selected_robot(), i, j, buttons);
 						if (!zoneGeo.get_nom_joueur_gagnant().equals("")) {
 							dispose();
-							zoneGeo.afficher_resultats();
+							Jeux.afficher_resultat();
 						}
 					}
 				}

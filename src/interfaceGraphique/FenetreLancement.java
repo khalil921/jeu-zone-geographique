@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import zoneGeographique.ZoneGeographique;
+import zoneGeographique.Jeux;
 
 public class FenetreLancement extends JFrame implements ActionListener {
 
@@ -22,16 +22,19 @@ public class FenetreLancement extends JFrame implements ActionListener {
 	private JPanel bottomPanel;
 	private JScrollPane scrollPane;
 
-	public static void main(String[] args) {
-		FenetreLancement premiereFenetre = new FenetreLancement();
-	}
+	private boolean garderJoueurs;
+	private String nomJ1, nomJ2;
 
-	public FenetreLancement() {
+	public FenetreLancement(boolean garderJoueurs) {
 
 		/*
 		 * fenetre contenant une presentation du jeux et de ses regles et permettant de
 		 * lancer une partie rapide ou bien configurer une partie
 		 */
+
+		nomJ1 = "";
+		nomJ2 = "";
+		this.garderJoueurs = garderJoueurs;
 		setLayout(new BorderLayout());
 
 		infoJeux = new JTextArea("Presentation du jeux  ... add it later");
@@ -70,13 +73,28 @@ public class FenetreLancement extends JFrame implements ActionListener {
 		if (e.getSource() == partieConfig) {
 			// configurer une partie
 			this.setVisible(false);
-			new FenetreSaisie();
+			Jeux.partie_config(garderJoueurs);
 		}
 		if (e.getSource() == partieRapide) {
-			// this.setVisible(false);
-			FenetreSaisieNomJoueur fenetreSaisieNomJoueur1 = new FenetreSaisieNomJoueur(
-					new ZoneGeographique(13, 13, 3, 7, 3, 4), true, null);
 			dispose();
+			Jeux.partie_rapide(garderJoueurs);
 		}
 	}
+
+	public void setNomJ1(String s) {
+		nomJ1 = s;
+	}
+
+	public void setNomJ2(String s) {
+		nomJ2 = s;
+	}
+
+	public String getNomJ1() {
+		return nomJ1;
+	}
+
+	public String getNomJ2() {
+		return nomJ2;
+	}
+
 }
