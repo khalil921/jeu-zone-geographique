@@ -25,7 +25,12 @@ public class FenetreResultat extends JFrame implements ActionListener {
 	private JButton nouvellePartieButton, nouvellePartieJoueursButton, relancerPartieButton, exitButton;
 
 	public FenetreResultat(ZoneGeographique zone) {
+
 		zoneGeo = zone;
+
+		long timeEnd = System.currentTimeMillis();
+		long timeDelta = timeEnd - zoneGeo.getTimeDebutJeux();
+		double duree = timeDelta / 1000.0;
 
 		setLayout(new BorderLayout());
 		panel = new JPanel(null);
@@ -35,6 +40,21 @@ public class FenetreResultat extends JFrame implements ActionListener {
 		gagnantLabel.setBounds(40, 40, 400, 30);
 		gagnantLabel.setFont(new Font("Aerial", Font.BOLD, 15));
 		panel.add(gagnantLabel);
+
+		JLabel infoLabel = new JLabel("");
+		infoLabel.setBounds(40, 70, 400, 30);
+		infoLabel.setFont(new Font("Aerial", Font.BOLD, 15));
+		panel.add(infoLabel);
+		if (zoneGeo.get_num_gagnant() == 1) {
+			infoLabel.setText("Vous avez attrappe tous les intrus");
+		} else if (zoneGeo.get_num_gagnant() == 2) {
+			infoLabel.setText("Vous avez vole " + zoneGeo.getNbArgentVole() + " sacs d argent");
+		}
+
+		JLabel dureeJeuxLabel = new JLabel("Duree du jeux : " + format_duree(duree));
+		dureeJeuxLabel.setBounds(40, 100, 400, 30);
+		dureeJeuxLabel.setFont(new Font("Aerial", Font.BOLD, 15));
+		panel.add(dureeJeuxLabel);
 
 		set_icon_gagnant();
 
@@ -119,6 +139,18 @@ public class FenetreResultat extends JFrame implements ActionListener {
 			dispose();
 			Jeux.nouvelle_partie(true);
 		}
+	}
+
+	public String format_duree(double duree) {
+		String s;
+		if (duree < 60) {
+			s = String.valueOf(duree) + " secondes";
+		} else {
+			int min = (int) (duree / 60);
+			double sec = duree - 60 * min;
+			s = String.valueOf(min) + " minutes et " + String.valueOf(sec) + " secondes";
+		}
+		return s;
 	}
 
 }

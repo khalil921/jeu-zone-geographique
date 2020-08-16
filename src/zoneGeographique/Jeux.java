@@ -40,18 +40,11 @@ public class Jeux {
 	public static void nouvelle_partie(boolean garderJoueurs) {
 		if (!garderJoueurs) {
 			fenetreResultat = null;
-			System.out
-					.println("MB :" + (double) (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory())
-							/ (1024 * 1024));
-
 			fenetreLancement = new FenetreLancement(false);
 		} else {
 			String nomJ1 = fenetreResultat.getZoneGeo().getNomJoueur1();
 			String nomJ2 = fenetreResultat.getZoneGeo().getNomJoueur2();
-
 			fenetreResultat = null;
-			// System.gc();
-
 			fenetreLancement = new FenetreLancement(true);
 			fenetreLancement.setNomJ1(nomJ1);
 			fenetreLancement.setNomJ2(nomJ2);

@@ -33,6 +33,9 @@ public class ZoneGeographique {
 
 	private int[][] cases;
 
+	boolean premierMouvement = true;
+	long timerStart; // timer pour calculer la duree du jeux
+
 	/*
 	 * 0 - vide, 1 - robot, 2 - intrus, 3 - source d'argent, 4 - obstacle, 5 -
 	 * sortie
@@ -93,6 +96,7 @@ public class ZoneGeographique {
 		nbintruschoisi = 0;
 
 		joueurGagnant = 0;
+		premierMouvement = true;
 
 	}
 
@@ -1054,6 +1058,11 @@ public class ZoneGeographique {
 			nbIntrusEchappes++;
 		}
 
+		if (premierMouvement) {
+			timerStart = System.currentTimeMillis();
+			premierMouvement = false;
+		}
+
 		if (nbIntrusEchappes + nbIntrusAttrappes == nbCharacteres) {
 			etatJeux = "finJeux";
 			FenetreJeux.setTopLabel("fin");
@@ -1116,6 +1125,10 @@ public class ZoneGeographique {
 
 	public int getNbArgentVole() {
 		return nbArgentVole;
+	}
+
+	public long getTimeDebutJeux() {
+		return timerStart;
 	}
 
 	public String get_nom_joueur_gagnant() {

@@ -24,6 +24,8 @@ public class FenetreJeux extends JFrame implements ActionListener {
 
 	private JButton[][] buttons;
 
+	private long timerStart;
+
 	public FenetreJeux(ZoneGeographique zone, JButton[][] buttons) {
 
 		setLayout(new BorderLayout());
