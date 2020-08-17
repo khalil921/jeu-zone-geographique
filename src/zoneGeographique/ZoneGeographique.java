@@ -956,20 +956,56 @@ public class ZoneGeographique {
 	public Position[] get_cases_adjacentes(int x, int y) {
 		Position[] casesAdjacentes = new Position[8];
 
-		int k = 0;
-		for (int i = x - 1; i <= x + 1; i++) {
-			for (int j = y - 1; j <= y + 1; j++) {
-				if (!meme_position(i, j, x, y)) {
-					if (Position_existe(i, j))
-						casesAdjacentes[k] = new Position(i, j);
-					else
-						casesAdjacentes[k] = null;
-					k++;
-				}
-			}
-		}
+		if (Position_existe(x - 1, y))
+			casesAdjacentes[0] = new Position(x - 1, y);
+		else
+			casesAdjacentes[0] = null;
+
+		if (Position_existe(x, y - 1))
+			casesAdjacentes[1] = new Position(x, y - 1);
+		else
+			casesAdjacentes[1] = null;
+
+		if (Position_existe(x + 1, y))
+			casesAdjacentes[2] = new Position(x + 1, y);
+		else
+			casesAdjacentes[2] = null;
+
+		if (Position_existe(x, y + 1))
+			casesAdjacentes[3] = new Position(x, y + 1);
+		else
+			casesAdjacentes[3] = null;
+
+		if ((!Position_existe(x - 1, y - 1))
+				|| ((Position_existe(x - 1, y - 1) && (cases[casesAdjacentes[0].getX()][casesAdjacentes[0].getY()] != 0)
+						&& (cases[casesAdjacentes[1].getX()][casesAdjacentes[1].getY()] != 0))))
+			casesAdjacentes[4] = null;
+		else
+			casesAdjacentes[4] = new Position(x - 1, y - 1);
+
+		if ((!Position_existe(x - 1, y + 1))
+				|| ((Position_existe(x - 1, y + 1) && (cases[casesAdjacentes[0].getX()][casesAdjacentes[0].getY()] != 0)
+						&& (cases[casesAdjacentes[3].getX()][casesAdjacentes[3].getY()] != 0))))
+			casesAdjacentes[5] = null;
+		else
+			casesAdjacentes[5] = new Position(x - 1, y + 1);
+
+		if ((!Position_existe(x + 1, y - 1))
+				|| ((Position_existe(x + 1, y - 1) && (cases[casesAdjacentes[2].getX()][casesAdjacentes[2].getY()] != 0)
+						&& (cases[casesAdjacentes[1].getX()][casesAdjacentes[1].getY()] != 0))))
+			casesAdjacentes[6] = null;
+		else
+			casesAdjacentes[6] = new Position(x + 1, y - 1);
+
+		if ((!Position_existe(x + 1, y + 1))
+				|| ((Position_existe(x + 1, y + 1) && (cases[casesAdjacentes[2].getX()][casesAdjacentes[2].getY()] != 0)
+						&& (cases[casesAdjacentes[3].getX()][casesAdjacentes[3].getY()] != 0))))
+			casesAdjacentes[7] = null;
+		else
+			casesAdjacentes[7] = new Position(x + 1, y + 1);
 
 		return casesAdjacentes;
+
 	}
 
 	public void attrapper_argent(Intrus in, Position p, JButton[][] buttons) {
