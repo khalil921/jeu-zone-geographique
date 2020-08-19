@@ -45,13 +45,13 @@ public class FenetreLancement extends JFrame implements ActionListener {
 		add(scrollPane, BorderLayout.CENTER);
 
 		partieRapide = new JButton("Partie rapide");
-		partieRapide.setFont(new Font("Aerial", Font.BOLD, 17));
+		partieRapide.setFont(new Font("Aerial", Font.BOLD, 13));
 		partieRapide.setBackground(new Color(32, 74, 135));
 		partieRapide.setForeground(Color.WHITE);
 		partieRapide.addActionListener(this);
 
 		partieConfig = new JButton("Configurer une partie");
-		partieConfig.setFont(new Font("Aerial", Font.BOLD, 17));
+		partieConfig.setFont(new Font("Aerial", Font.BOLD, 13));
 		partieConfig.setBackground(new Color(32, 74, 135));
 		partieConfig.setForeground(Color.WHITE);
 		partieConfig.addActionListener(this);

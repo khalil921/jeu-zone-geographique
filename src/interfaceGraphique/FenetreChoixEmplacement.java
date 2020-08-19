@@ -64,7 +64,7 @@ public class FenetreChoixEmplacement extends JFrame implements ActionListener {
 
 		bottomLabel = new JLabel("				");
 		bottomLabel.setForeground(Color.red.darker());
-		bottomLabel.setFont(new Font("Arial", Font.BOLD, 15));
+		bottomLabel.setFont(new Font("Arial", Font.BOLD, 13));
 
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -73,7 +73,7 @@ public class FenetreChoixEmplacement extends JFrame implements ActionListener {
 		bottomPanel.add(bottomLabel, gbc);
 
 		configAutoButton = new JButton("Configuration automatique");
-		configAutoButton.setFont(new Font("Aerial", Font.BOLD, 17));
+		configAutoButton.setFont(new Font("Aerial", Font.BOLD, 13));
 		configAutoButton.setBackground(new Color(32, 74, 135));
 		configAutoButton.setForeground(Color.WHITE);
 		configAutoButton.addActionListener(this);
@@ -84,7 +84,7 @@ public class FenetreChoixEmplacement extends JFrame implements ActionListener {
 		bottomPanel.add(configAutoButton, gbc);
 
 		confirmButton = new JButton("Confirmer");
-		confirmButton.setFont(new Font("Aerial", Font.BOLD, 17));
+		confirmButton.setFont(new Font("Aerial", Font.BOLD, 13));
 		confirmButton.setBackground(new Color(32, 74, 135));
 		confirmButton.setForeground(Color.WHITE);
 		confirmButton.addActionListener(this);
@@ -94,7 +94,7 @@ public class FenetreChoixEmplacement extends JFrame implements ActionListener {
 		bottomPanel.add(confirmButton, gbc);
 
 		configManuelleButton = new JButton("Configuration manuelle");
-		configManuelleButton.setFont(new Font("Aerial", Font.BOLD, 17));
+		configManuelleButton.setFont(new Font("Aerial", Font.BOLD, 13));
 		configManuelleButton.setBackground(new Color(32, 74, 135));
 		configManuelleButton.setForeground(Color.WHITE);
 		configManuelleButton.addActionListener(this);

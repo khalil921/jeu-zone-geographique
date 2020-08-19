@@ -371,17 +371,34 @@ public class ZoneGeographique {
 		return bool;
 	}
 
+	
 	public boolean Bonne_Position_Intrus(int x, int y) {
 		boolean bool = true;
-		if (cases[x][y] == 0 || cases[x][y] == 2 || cases[x][y] == 1) {
-			if ((x != 0) && (y != 0) && (x != n - 1) && (y != m - 1) && (cases[x][y] != 1)) {
+		if (cases[x][y] == 0 || cases[x][y] == 2) {
+			if ((x != 0) && (y != 0) && (x != n - 1) && (y != m - 1)) {
 				bool = false;
 			}
-		} else {
-			bool = false;
-		}
+			else if(((x==0)&&(Position_existe(x,(y+1)))&&(cases[x][y+1]!=0))&&((x==0)&&(Position_existe(x,(y-1)))&&(cases[x][y-1]!=0))&&((x==0)&&(Position_existe((x+1),y))&&(cases[x+1][y]!=0))) {
+				bool = false;
+				
+			}
+			else if(((x==(n-1))&&(Position_existe(x,(y+1)))&&(cases[x][y+1]!=0))&&((x==(n-1))&&(Position_existe(x,(y-1)))&&(cases[x][y-1]!=0))&&((x==(n-1))&&(Position_existe((x+1),y))&&(cases[x-1][y]!=0))) {
+				bool = false;
+				
+			}
+			else if(((y==0)&&(Position_existe((x+1),y))&&(cases[x+1][y]!=0))&&((y==0)&&(Position_existe((x-1),y))&&(cases[x-1][y]!=0))&&((y==0)&&(Position_existe(x,(y+1))&&(cases[x][y+1]!=0)))) {
+				bool = false;
+				
+			}
+			else if(((y==(m-1))&&(Position_existe((x+1),y))&&(cases[x+1][y]!=0))&&((y==(m-1))&&(Position_existe((x-1),y))&&(cases[x-1][y]!=0))&&((y==(m-1))&&(Position_existe(x,(y-1))&&(cases[x][y-1]!=0)))) {
+				bool = false;
+				
+			}
+		} 
 		return bool;
 	}
+
+	
 
 	public int genererInt(int borneSup) {
 		Random random = new Random();

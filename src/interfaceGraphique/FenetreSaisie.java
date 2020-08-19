@@ -93,7 +93,7 @@ public class FenetreSaisie extends JFrame implements ActionListener {
 		errorLabel.setFont(new Font("Arial", Font.BOLD, 12));
 
 		button = new JButton("Suivant");
-		button.setFont(new Font("Aerial", Font.BOLD, 17));
+		button.setFont(new Font("Aerial", Font.BOLD, 13));
 		button.setBackground(new Color(32, 74, 135));
 		button.setForeground(Color.WHITE);
 		button.setBounds(650, 450, 150, 30);
@@ -154,19 +154,19 @@ public class FenetreSaisie extends JFrame implements ActionListener {
 				// 10 <= n,m <= 30 ; 0 < nbch <=4 ; 0 < nbSorties < 6 ;
 				if ((n < 12) || (n > 20) || (m < 12) || (m > 30) || (nbCh <= 0) || (nbCh > 4) || (nbSorties < 1)
 						|| (nbSorties > 5) || (nbObstacles < 1) || (nbObstacles > 5)) {
-					errorLabel.setText("Erreur lors de la saisie, réessayez!");
+					errorLabel.setText("Erreur lors de la saisie, reessayez!");
 				} else if ((nbCh == 1) && (nbSacArgent != 3) && (nbSacArgent != 2)) {
 					errorLabel.setText(
-							"Erreur lors de la saisie,si le nombre de caractere egale 1 il faut que il faut que les sacs d'argents entre [2-3]");
+							"Si le nombre de characteres est 1 il faut choisir entre [2-3] sacs d'argents");
 				} else if ((nbCh == 2) && (nbSacArgent < (2 * nbCh)) || (nbSacArgent > (3 * nbCh))) {
 					errorLabel.setText(
-							"Si le nombre des caractéres egale 2 donc il faut que les sacs d'argents entre [4-6]");
+							"Si le nombre de characteres est 2 il faut choisir entre [4-6] sacs d'argents");
 				} else if ((nbCh == 3) && (nbSacArgent < (2 * nbCh)) || (nbSacArgent > (3 * nbCh))) {
 					errorLabel.setText(
-							"Si le nombre des caractéres egale 3 donc il faut que les sacs d'argents entre [6-9]");
+							"Si le nombre de characteres est 3 il faut choisir entre [6-9] sacs d'argents");
 				} else if ((nbCh == 4) && (nbSacArgent < (2 * nbCh)) || (nbSacArgent > (3 * nbCh))) {
 					errorLabel.setText(
-							"Si le nombre des caractéres egale 4 donc il faut que les sacs d'argents entre [8-12]");
+							"Si le nombre de characteres est 4 il faut choisir entre [8-12] sacs d'argents");
 				} else {
 					errorLabel.setForeground(Color.green);
 					errorLabel.setText("Saisie reessite");

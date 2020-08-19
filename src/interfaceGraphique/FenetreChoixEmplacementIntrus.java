@@ -54,10 +54,10 @@ public class FenetreChoixEmplacementIntrus extends JFrame implements ActionListe
 		topPanel.add(topLabel);
 		bottomLabel = new JLabel("		");
 		bottomLabel.setForeground(Color.red.darker());
-		bottomLabel.setFont(new Font("Arial", Font.BOLD, 15));
+		bottomLabel.setFont(new Font("Arial", Font.BOLD, 13));
 
 		button = new JButton("Commencer le jeu");
-		button.setFont(new Font("Aerial", Font.BOLD, 17));
+		button.setFont(new Font("Aerial", Font.BOLD, 13));
 		button.setBackground(new Color(32, 74, 135));
 		button.setForeground(Color.WHITE);
 		button.addActionListener(this);
