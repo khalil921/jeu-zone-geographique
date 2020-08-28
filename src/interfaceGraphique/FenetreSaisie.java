@@ -156,17 +156,13 @@ public class FenetreSaisie extends JFrame implements ActionListener {
 						|| (nbSorties > 5) || (nbObstacles < 1) || (nbObstacles > 5)) {
 					errorLabel.setText("Erreur lors de la saisie, reessayez!");
 				} else if ((nbCh == 1) && (nbSacArgent != 3) && (nbSacArgent != 2)) {
-					errorLabel.setText(
-							"Si le nombre de characteres est 1 il faut choisir entre [2-3] sacs d'argents");
+					errorLabel.setText("Si le nombre de characteres est 1 il faut choisir entre [2-3] sacs d'argents");
 				} else if ((nbCh == 2) && (nbSacArgent < (2 * nbCh)) || (nbSacArgent > (3 * nbCh))) {
-					errorLabel.setText(
-							"Si le nombre de characteres est 2 il faut choisir entre [4-6] sacs d'argents");
+					errorLabel.setText("Si le nombre de characteres est 2 il faut choisir entre [4-6] sacs d'argents");
 				} else if ((nbCh == 3) && (nbSacArgent < (2 * nbCh)) || (nbSacArgent > (3 * nbCh))) {
-					errorLabel.setText(
-							"Si le nombre de characteres est 3 il faut choisir entre [6-9] sacs d'argents");
+					errorLabel.setText("Si le nombre de characteres est 3 il faut choisir entre [6-9] sacs d'argents");
 				} else if ((nbCh == 4) && (nbSacArgent < (2 * nbCh)) || (nbSacArgent > (3 * nbCh))) {
-					errorLabel.setText(
-							"Si le nombre de characteres est 4 il faut choisir entre [8-12] sacs d'argents");
+					errorLabel.setText("Si le nombre de characteres est 4 il faut choisir entre [8-12] sacs d'argents");
 				} else {
 					errorLabel.setForeground(Color.green);
 					errorLabel.setText("Saisie reessite");

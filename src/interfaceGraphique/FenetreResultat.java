@@ -97,9 +97,11 @@ public class FenetreResultat extends JFrame implements ActionListener {
 		setTitle("Jeu multi-joueurs pour la surveillance d une zone geographique");
 		setVisible(true);
 
-		// prints used memory in console .... remove later
-		System.out.println("MB :"
-				+ (double) (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / (1024 * 1024));
+		/*
+		 * // prints used memory in console .... remove later System.out.println("MB :"
+		 * + (double) (Runtime.getRuntime().totalMemory() -
+		 * Runtime.getRuntime().freeMemory()) / (1024 * 1024));
+		 */
 
 	}
 
