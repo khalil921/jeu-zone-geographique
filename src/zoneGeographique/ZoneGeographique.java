@@ -765,7 +765,7 @@ public class ZoneGeographique {
 
 		if ((cases[x][y] != 0) && (cases[x][y] != 5))
 			possible = false;
-		if ((cases[x][y] == 5) && (in.getNbSacsArgent() == 0))
+		if ((cases[x][y] == 5) && ((in.getNbSacsArgent() == 0)||(in.getNbSacsArgent()==1)))
 			possible = false;
 
 		Position[] adjacentes = get_cases_adjacentes(x, y);

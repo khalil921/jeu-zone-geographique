@@ -91,7 +91,7 @@ public class FenetreChoixEmplacementIntrus extends JFrame implements ActionListe
 			} else {
 				// commencer le jeux ...
 				zoneGeo.enregistrer_choix(); // creation des objets de type Robot et Intrus
-				zoneGeo.set_etat("tourJoueur2");
+				zoneGeo.set_etat("tourJoueur1");
 				Jeux.commencer_jeux();
 				dispose();
 			}
