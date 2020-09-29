@@ -1,13 +1,13 @@
-package characteres;
+package caracteres;
 
 import position.*;
 
-public class Charactere {
+public class Caractere {
 
 	protected int x, y;
 	protected boolean selected;
 
-	public Charactere(int x, int y) {
+	public Caractere(int x, int y) {
 		this.x = x;
 		this.y = y;
 		selected = false;

@@ -1,8 +1,8 @@
-package characteres;
+package caracteres;
 
 import position.*;
 
-public class Intrus extends Charactere {
+public class Intrus extends Caractere {
 
 	private int nbSacsArgent; // 0,1 ou 2
 	private boolean estLibre;

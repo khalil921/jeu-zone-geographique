@@ -9,9 +9,9 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-import characteres.Charactere;
-import characteres.Intrus;
-import characteres.Robot;
+import caracteres.Caractere;
+import caracteres.Intrus;
+import caracteres.Robot;
 import interfaceGraphique.FenetreChoixEmplacement;
 import interfaceGraphique.FenetreChoixEmplacementIntrus;
 import interfaceGraphique.FenetreChoixEmplacementRobots;
@@ -855,7 +855,7 @@ public class ZoneGeographique {
 
 	}
 
-	public void deselect(Charactere C, JButton[][] buttons) {
+	public void deselect(Caractere C, JButton[][] buttons) {
 
 		if (C.is_selected()) {
 			for (int i = 0; i < 4; i++) {

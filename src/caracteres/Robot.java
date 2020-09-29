@@ -1,7 +1,7 @@
-package characteres;
+package caracteres;
 
 
-public class Robot extends Charactere {
+public class Robot extends Caractere {
 
 	private int nbIntrusAttrappes;
 
@@ -16,9 +16,5 @@ public class Robot extends Charactere {
 
 	public int getNbIntrusAttrappes() {
 		return nbIntrusAttrappes;
-	}
-
-	public boolean is_selected() {
-		return selected;
 	}
 }

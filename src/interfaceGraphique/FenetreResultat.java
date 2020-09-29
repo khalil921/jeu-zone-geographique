@@ -50,7 +50,6 @@ public class FenetreResultat extends JFrame implements ActionListener {
 		} else if (zoneGeo.get_num_gagnant() == 2) {
 			infoLabel.setText("Vous avez vole " + zoneGeo.getNbArgentVole() + " sacs d argent");
 		}
-
 		JLabel dureeJeuxLabel = new JLabel("Duree du jeux : " + format_duree(duree));
 		dureeJeuxLabel.setBounds(40, 100, 400, 30);
 		dureeJeuxLabel.setFont(new Font("Aerial", Font.BOLD, 15));
@@ -146,10 +145,10 @@ public class FenetreResultat extends JFrame implements ActionListener {
 	public String format_duree(double duree) {
 		String s;
 		if (duree < 60) {
-			s = String.valueOf(duree) + " secondes";
+			s = String.valueOf((int)duree) + " secondes";
 		} else {
 			int min = (int) (duree / 60);
-			double sec = duree - 60 * min;
+			int sec =  (int) duree - 60 * min;
 			s = String.valueOf(min) + " minutes et " + String.valueOf(sec) + " secondes";
 		}
 		return s;

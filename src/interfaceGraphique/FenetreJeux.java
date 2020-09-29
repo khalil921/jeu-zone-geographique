@@ -49,7 +49,6 @@ public class FenetreJeux extends JFrame implements ActionListener {
 
 		topLabel = new JLabel("Tour Joueur 1 : " + zoneGeo.getNomJoueur1());
 		topLabel.setForeground(new Color(17, 133, 224));
-x
 		topLabel.setFont(new Font("Arial", Font.BOLD, 17));
 
 		topPanel.add(topLabel);
