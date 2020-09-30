@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import zoneGeographique.Jeux;
+import zoneGeographique.Jeu;
 import zoneGeographique.ZoneGeographique;
 
 public class FenetreSaisieNomJoueur extends JFrame implements ActionListener {
@@ -106,14 +106,14 @@ public class FenetreSaisieNomJoueur extends JFrame implements ActionListener {
 		} else {
 			errorLabel.setForeground(Color.green.darker());
 			errorLabel.setText("Saisie faite avec succés, cliquez suivant pour continuer");
-			// fenetre choix emplacements intrus ...
+			// lancer fenetre choix emplacements intrus ...
 			if (!Joueur1) {
 				zoneGeo.setNomJoueur2(nomJ);
-				Jeux.passer_choix_intrus(true);
+				Jeu.passer_choix_intrus(true);
 
 			} else {
 				zoneGeo.setNomJoueur1(nomJ);
-				Jeux.passer_choix_emplacements(false);
+				Jeu.passer_choix_emplacements(false);
 			}
 			dispose();
 		}

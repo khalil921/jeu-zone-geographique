@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import zoneGeographique.Jeux;
+import zoneGeographique.Jeu;
 
 public class FenetreSaisie extends JFrame implements ActionListener {
 
@@ -35,7 +35,7 @@ public class FenetreSaisie extends JFrame implements ActionListener {
 		saisie = new JPanel(new BorderLayout());
 
 		JPanel infoPanel = new JPanel();
-		JLabel infoLabel = new JLabel("Saisir les informations necessaire pour commencer le jeux");
+		JLabel infoLabel = new JLabel("Saisir les informations necessaire pour commencer le jeu");
 		infoLabel.setForeground(Color.blue.darker().darker());
 		infoLabel.setFont(new Font("Arial", Font.BOLD, 17));
 		infoPanel.add(infoLabel);
@@ -167,9 +167,9 @@ public class FenetreSaisie extends JFrame implements ActionListener {
 					errorLabel.setForeground(Color.green);
 					errorLabel.setText("Saisie reessite");
 					if (!garderJoueurs) {
-						Jeux.passer_saisie_joueur1();
+						Jeu.passer_saisie_joueur1();
 					} else {
-						Jeux.passer_choix_emplacements(garderJoueurs);
+						Jeu.passer_choix_emplacements(garderJoueurs);
 					}
 					dispose();
 				}

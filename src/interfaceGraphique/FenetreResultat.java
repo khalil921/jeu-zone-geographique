@@ -15,7 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import zoneGeographique.Jeux;
+import zoneGeographique.Jeu;
 import zoneGeographique.ZoneGeographique;
 
 public class FenetreResultat extends JFrame implements ActionListener {
@@ -29,14 +29,14 @@ public class FenetreResultat extends JFrame implements ActionListener {
 		zoneGeo = zone;
 
 		long timeEnd = System.currentTimeMillis();
-		long timeDelta = timeEnd - zoneGeo.getTimeDebutJeux();
+		long timeDelta = timeEnd - zoneGeo.getTimeDebutJeu();
 		double duree = timeDelta / 1000.0;
 
 		setLayout(new BorderLayout());
 		panel = new JPanel(null);
 
 		JLabel gagnantLabel = new JLabel("Le joueur " + zoneGeo.get_num_gagnant() + " " + " ( "
-				+ zoneGeo.get_nom_joueur_gagnant() + " ) a gagner le jeux");
+				+ zoneGeo.get_nom_joueur_gagnant() + " ) a gagné la partie");
 		gagnantLabel.setBounds(40, 40, 400, 30);
 		gagnantLabel.setFont(new Font("Aerial", Font.BOLD, 15));
 		panel.add(gagnantLabel);
@@ -46,14 +46,14 @@ public class FenetreResultat extends JFrame implements ActionListener {
 		infoLabel.setFont(new Font("Aerial", Font.BOLD, 15));
 		panel.add(infoLabel);
 		if (zoneGeo.get_num_gagnant() == 1) {
-			infoLabel.setText("Vous avez attrappe tous les intrus");
+			infoLabel.setText("Vous avez attrapé tous les intrus");
 		} else if (zoneGeo.get_num_gagnant() == 2) {
-			infoLabel.setText("Vous avez vole " + zoneGeo.getNbArgentVole() + " sacs d argent");
+			infoLabel.setText("Vous avez volé " + zoneGeo.getNbArgentVole() + " sacs d argent");
 		}
-		JLabel dureeJeuxLabel = new JLabel("Duree du jeux : " + format_duree(duree));
-		dureeJeuxLabel.setBounds(40, 100, 400, 30);
-		dureeJeuxLabel.setFont(new Font("Aerial", Font.BOLD, 15));
-		panel.add(dureeJeuxLabel);
+		JLabel dureeJeuLabel = new JLabel("Durée de la partie : " + format_duree(duree));
+		dureeJeuLabel.setBounds(40, 100, 400, 30);
+		dureeJeuLabel.setFont(new Font("Aerial", Font.BOLD, 15));
+		panel.add(dureeJeuLabel);
 
 		set_icon_gagnant();
 
@@ -96,12 +96,6 @@ public class FenetreResultat extends JFrame implements ActionListener {
 		setTitle("Jeu multi-joueurs pour la surveillance d une zone geographique");
 		setVisible(true);
 
-		/*
-		 * // prints used memory in console .... remove later System.out.println("MB :"
-		 * + (double) (Runtime.getRuntime().totalMemory() -
-		 * Runtime.getRuntime().freeMemory()) / (1024 * 1024));
-		 */
-
 	}
 
 	public void set_icon_gagnant() {
@@ -130,25 +124,25 @@ public class FenetreResultat extends JFrame implements ActionListener {
 		}
 		if (e.getSource() == relancerPartieButton) {
 			dispose();
-			Jeux.relancer_partie();
+			Jeu.relancer_partie();
 		}
 		if (e.getSource() == nouvellePartieButton) {
 			dispose();
-			Jeux.nouvelle_partie(false);
+			Jeu.nouvelle_partie(false);
 		}
 		if (e.getSource() == nouvellePartieJoueursButton) {
 			dispose();
-			Jeux.nouvelle_partie(true);
+			Jeu.nouvelle_partie(true);
 		}
 	}
 
 	public String format_duree(double duree) {
 		String s;
 		if (duree < 60) {
-			s = String.valueOf((int)duree) + " secondes";
+			s = String.valueOf((int) duree) + " secondes";
 		} else {
 			int min = (int) (duree / 60);
-			int sec =  (int) duree - 60 * min;
+			int sec = (int) duree - 60 * min;
 			s = String.valueOf(min) + " minutes et " + String.valueOf(sec) + " secondes";
 		}
 		return s;

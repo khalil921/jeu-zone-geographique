@@ -15,7 +15,7 @@ import caracteres.Robot;
 import interfaceGraphique.FenetreChoixEmplacement;
 import interfaceGraphique.FenetreChoixEmplacementIntrus;
 import interfaceGraphique.FenetreChoixEmplacementRobots;
-import interfaceGraphique.FenetreJeux;
+import interfaceGraphique.FenetreJeu;
 import position.Position;
 
 public class ZoneGeographique {
@@ -34,7 +34,7 @@ public class ZoneGeographique {
 	private int[][] cases;
 
 	boolean premierMouvement = true;
-	long timerStart; // timer pour calculer la duree du jeux
+	long timerStart; // timer pour calculer la duree du jeu
 
 	/*
 	 * 0 - vide, 1 - robot, 2 - intrus, 3 - source d'argent, 4 - obstacle, 5 -
@@ -45,7 +45,7 @@ public class ZoneGeographique {
 	 * -3 argent volee -2 intrus attrappé
 	 */
 
-	private String etatJeux = "DebutConfiguration";
+	private String etatJeu = "DebutConfiguration";
 
 	private Robot[] robots;
 	private Intrus[] intrus;
@@ -83,7 +83,7 @@ public class ZoneGeographique {
 		intrus = null;
 		prochainsMouvements = null;
 
-		etatJeux = "DebutConfiguration";
+		etatJeu = "DebutConfiguration";
 
 		nbArgentVole = 0;
 		nbIntrusAttrappes = 0;
@@ -410,7 +410,7 @@ public class ZoneGeographique {
 
 	public void Choix_aleatoire(JButton[][] buttons) {
 
-		if (!etatJeux.equals("DebutConfiguration")) {
+		if (!etatJeu.equals("DebutConfiguration")) {
 			for (int i = 0; i < n; i++)
 				for (int j = 0; j < m; j++)
 					set_case(i, j, "vide", buttons);
@@ -419,7 +419,7 @@ public class ZoneGeographique {
 		choix_aleatoire_sacs_argents(buttons);
 		choix_aleatoire_obstacles(buttons);
 		FenetreChoixEmplacement.setTopLabel("Confirmer cette configuration ou choisir une autre");
-		etatJeux = "";
+		etatJeu = "";
 		nbSortiesChoisies = nbSorties;
 		nbSacsArgentChoisi = nbSacArgent;
 		nbObstaclesChoisi = nbObstacles;
@@ -432,8 +432,7 @@ public class ZoneGeographique {
 			nbintruschoisi++;
 
 			if (nbintruschoisi == nbCharacteres) {
-				FenetreChoixEmplacementIntrus
-						.setTopLabel("commencer le jeux ou bien modifier l emplacement des intrus");
+				FenetreChoixEmplacementIntrus.setTopLabel("commencer le jeu ou bien modifier l emplacement des intrus");
 				FenetreChoixEmplacementIntrus.setBottomLabel("		");
 			} else {
 				FenetreChoixEmplacementIntrus.setTopLabel(
@@ -447,7 +446,7 @@ public class ZoneGeographique {
 				FenetreChoixEmplacementIntrus.setTopLabel(
 						"Choisir les emplacements des intrus (" + nbintruschoisi + "/" + nbCharacteres + ")");
 				FenetreChoixEmplacementIntrus.setBottomLabel("		");
-				etatJeux = "choixEmplacementsintrus";
+				etatJeu = "choixEmplacementsintrus";
 			} else {
 				nbintruschoisi--;
 				FenetreChoixEmplacementIntrus.setTopLabel(
@@ -479,7 +478,7 @@ public class ZoneGeographique {
 				FenetreChoixEmplacementRobots.setTopLabel(
 						"Choisir les emplacements des robots (" + nbRobotsChoisi + "/" + nbCharacteres + ")");
 				FenetreChoixEmplacementRobots.setBottomLabel("		");
-				etatJeux = "choixEmplacementsrobots";
+				etatJeu = "choixEmplacementsrobots";
 			} else {
 				nbRobotsChoisi--;
 				FenetreChoixEmplacementRobots.setTopLabel(
@@ -499,12 +498,12 @@ public class ZoneGeographique {
 					FenetreChoixEmplacement.setTopLabel(
 							"Choisir les emplacements des sorties (" + nbSortiesChoisies + "/" + nbSorties + ")");
 					FenetreChoixEmplacement.setBottomLabel("		");
-					etatJeux = "choixEmplacementsSorties";
+					etatJeu = "choixEmplacementsSorties";
 				} else if (nbSacsArgentChoisi < nbSacArgent) {
 					FenetreChoixEmplacement.setTopLabel("Choisir les emplacements des sac d'argents ("
 							+ nbSacsArgentChoisi + "/" + nbSacArgent + ")");
 					FenetreChoixEmplacement.setBottomLabel("		");
-					etatJeux = "choixEmplacementsSacArgent";
+					etatJeu = "choixEmplacementsSacArgent";
 				} else {
 					FenetreChoixEmplacement.setTopLabel("Confirmer votre choix");
 					FenetreChoixEmplacement.setBottomLabel("		");
@@ -521,7 +520,7 @@ public class ZoneGeographique {
 				FenetreChoixEmplacement.setTopLabel(
 						"Choisir les emplacements des obstacles (" + nbObstaclesChoisi + "/" + nbObstacles + ")");
 				FenetreChoixEmplacement.setBottomLabel("		");
-				etatJeux = "choixEmplacementsobstacle";
+				etatJeu = "choixEmplacementsobstacle";
 			} else {
 				nbObstaclesChoisi--;
 				FenetreChoixEmplacement.setTopLabel(
@@ -546,12 +545,12 @@ public class ZoneGeographique {
 					FenetreChoixEmplacement.setTopLabel("Choisir les emplacements des sac d'argents ("
 							+ nbSacsArgentChoisi + "/" + nbSacArgent + ")");
 					FenetreChoixEmplacement.setBottomLabel("		");
-					etatJeux = "choixEmplacementsSacArgent";
+					etatJeu = "choixEmplacementsSacArgent";
 				} else if (nbObstaclesChoisi < nbObstacles) {
 					FenetreChoixEmplacement.setTopLabel(
 							"Choisir les emplacements des obstacles (" + nbObstaclesChoisi + "/" + nbObstacles + ")");
 					FenetreChoixEmplacement.setBottomLabel("		");
-					etatJeux = "choixEmplacementsobstacle";
+					etatJeu = "choixEmplacementsobstacle";
 				} else {
 					FenetreChoixEmplacement.setTopLabel("Confirmer votre choix");
 					FenetreChoixEmplacement.setBottomLabel("		");
@@ -568,7 +567,7 @@ public class ZoneGeographique {
 				FenetreChoixEmplacement.setTopLabel(
 						"Choisir les emplacements des sorties (" + nbSortiesChoisies + "/" + nbSorties + ")");
 				FenetreChoixEmplacement.setBottomLabel("		");
-				etatJeux = "choixEmplacementsSorties";
+				etatJeu = "choixEmplacementsSorties";
 			} else {
 				nbSortiesChoisies--;
 				FenetreChoixEmplacement.setTopLabel(
@@ -593,13 +592,13 @@ public class ZoneGeographique {
 					FenetreChoixEmplacement.setTopLabel(
 							"Choisir les emplacements des sorties (" + nbSortiesChoisies + "/" + nbSorties + ")");
 					FenetreChoixEmplacement.setBottomLabel("		");
-					etatJeux = "choixEmplacementsSorties";
+					etatJeu = "choixEmplacementsSorties";
 				}
 				if (nbObstaclesChoisi < nbObstacles) {
 					FenetreChoixEmplacement.setTopLabel(
 							"Choisir les emplacements des obstacles (" + nbObstaclesChoisi + "/" + nbObstacles + ")");
 					FenetreChoixEmplacement.setBottomLabel("		");
-					etatJeux = "choixEmplacementsobstacle";
+					etatJeu = "choixEmplacementsobstacle";
 				} else {
 					FenetreChoixEmplacement.setTopLabel("Confirmez votre choix");
 					FenetreChoixEmplacement.setBottomLabel("		");
@@ -616,7 +615,7 @@ public class ZoneGeographique {
 				FenetreChoixEmplacement.setTopLabel(
 						"Choisir les emplacements des sac d'argents (" + nbSacsArgentChoisi + "/" + nbSacArgent + ")");
 				FenetreChoixEmplacement.setBottomLabel("		");
-				etatJeux = "choixEmplacementsSacArgent";
+				etatJeu = "choixEmplacementsSacArgent";
 			} else {
 				nbSacsArgentChoisi--;
 				FenetreChoixEmplacement.setTopLabel(
@@ -684,11 +683,11 @@ public class ZoneGeographique {
 	}
 
 	public String get_etat() {
-		return etatJeux;
+		return etatJeu;
 	}
 
 	public void set_etat(String s) {
-		etatJeux = s;
+		etatJeu = s;
 	}
 
 	public int getnbCharacteres() {
@@ -765,7 +764,7 @@ public class ZoneGeographique {
 
 		if ((cases[x][y] != 0) && (cases[x][y] != 5))
 			possible = false;
-		if ((cases[x][y] == 5) && ((in.getNbSacsArgent() == 0)||(in.getNbSacsArgent()==1)))
+		if ((cases[x][y] == 5) && ((in.getNbSacsArgent() == 0) || (in.getNbSacsArgent() == 1)))
 			possible = false;
 
 		Position[] adjacentes = get_cases_adjacentes(x, y);
@@ -867,11 +866,11 @@ public class ZoneGeographique {
 				}
 			}
 			C.set_selected(false);
-			if (etatJeux.equals("tourJoueur2Mouvement")) {
-				etatJeux = "tourJoueur2";
+			if (etatJeu.equals("tourJoueur2Mouvement")) {
+				etatJeu = "tourJoueur2";
 			}
-			if (etatJeux.equals("tourJoueur1Mouvement")) {
-				etatJeux = "tourJoueur1";
+			if (etatJeu.equals("tourJoueur1Mouvement")) {
+				etatJeu = "tourJoueur1";
 			}
 			prochainsMouvements = null;
 		}
@@ -908,7 +907,7 @@ public class ZoneGeographique {
 			}
 		}
 		prochainsMouvements = mv;
-		etatJeux = "tourJoueur2Mouvement";
+		etatJeu = "tourJoueur2Mouvement";
 	}
 
 	public void montrer_mouvemeent_possibles(Robot R, Position[] mv, JButton[][] buttons) {
@@ -923,7 +922,7 @@ public class ZoneGeographique {
 			}
 		}
 		prochainsMouvements = mv;
-		etatJeux = "tourJoueur1Mouvement";
+		etatJeu = "tourJoueur1Mouvement";
 	}
 
 	public void annuler_montrer_mouvemeent_possibles(Intrus in, Position[] mv, JButton[][] buttons) {
@@ -1118,12 +1117,12 @@ public class ZoneGeographique {
 		}
 
 		if (nbIntrusEchappes + nbIntrusAttrappes == nbCharacteres) {
-			etatJeux = "finJeux";
-			FenetreJeux.setTopLabel("fin");
+			etatJeu = "finJeu";
+			FenetreJeu.setTopLabel("fin");
 			set_gagnant();
 		} else {
-			etatJeux = "tourJoueur1";
-			FenetreJeux.setTopLabel("tourJ1");
+			etatJeu = "tourJoueur1";
+			FenetreJeu.setTopLabel("tourJ1");
 		}
 	}
 
@@ -1152,20 +1151,20 @@ public class ZoneGeographique {
 		verifier_intrus(R, buttons);
 
 		if ((!existe_mouvement_possible_intrus()) || (nbIntrusAttrappes + nbIntrusEchappes == nbCharacteres)) {
-			etatJeux = "finJeux";
-			FenetreJeux.setTopLabel("fin");
+			etatJeu = "finJeu";
+			FenetreJeu.setTopLabel("fin");
 			set_gagnant();
 			// afficher_resultats();
 		} else {
-			etatJeux = "tourJoueur2";
-			FenetreJeux.setTopLabel("tourJ2");
+			etatJeu = "tourJoueur2";
+			FenetreJeu.setTopLabel("tourJ2");
 		}
 	}
 
 	public void set_gagnant() {
 		joueurGagnant = 0;
 
-		if (etatJeux.equals("finJeux")) {
+		if (etatJeu.equals("finJeu")) {
 			if ((nbIntrusAttrappes == nbCharacteres) || (nbIntrusEchappes == 0))
 				joueurGagnant = 1;
 			else
@@ -1181,7 +1180,7 @@ public class ZoneGeographique {
 		return nbArgentVole;
 	}
 
-	public long getTimeDebutJeux() {
+	public long getTimeDebutJeu() {
 		return timerStart;
 	}
 

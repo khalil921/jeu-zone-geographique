@@ -13,10 +13,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import zoneGeographique.Jeux;
+import zoneGeographique.Jeu;
 import zoneGeographique.ZoneGeographique;
 
-public class FenetreJeux extends JFrame implements ActionListener {
+public class FenetreJeu extends JFrame implements ActionListener {
 
 	private static ZoneGeographique zoneGeo;
 	private JLabel bottomLabel;
@@ -26,7 +26,7 @@ public class FenetreJeux extends JFrame implements ActionListener {
 
 	private long timerStart;
 
-	public FenetreJeux(ZoneGeographique zone, JButton[][] buttons) {
+	public FenetreJeu(ZoneGeographique zone, JButton[][] buttons) {
 
 		setLayout(new BorderLayout());
 
@@ -83,7 +83,7 @@ public class FenetreJeux extends JFrame implements ActionListener {
 			topLabel.setText("Tour Joueur 2 : " + zoneGeo.getNomJoueur2());
 			topLabel.setForeground(new Color(167, 32, 147));
 		} else if (s.equals("fin")) {
-			topLabel.setText("Fin du jeux ! ");
+			topLabel.setText("Fin du jeu ! ");
 			topLabel.setForeground(Color.black);
 		}
 	}
@@ -98,7 +98,7 @@ public class FenetreJeux extends JFrame implements ActionListener {
 		for (int i = 0; i < zoneGeo.get_nb_lignes(); i++) {
 			for (int j = 0; j < zoneGeo.get_nb_colonnes(); j++) {
 
-				// lancement du jeux ...
+				// lancement du jeu ...
 				// tour Joueur 2 (intrus)
 				if (e.getSource() == buttons[i][j]) {
 					if ((zoneGeo.get_case(i, j) == 2) && ((zoneGeo.get_etat().equals("tourJoueur2"))
@@ -118,7 +118,7 @@ public class FenetreJeux extends JFrame implements ActionListener {
 						zoneGeo.move_intrus(zoneGeo.get_selected_intrus(), i, j, buttons);
 						if (!zoneGeo.get_nom_joueur_gagnant().equals("")) {
 							dispose();
-							Jeux.afficher_resultat();
+							Jeu.afficher_resultat();
 						}
 					}
 
@@ -139,7 +139,7 @@ public class FenetreJeux extends JFrame implements ActionListener {
 						zoneGeo.move_robot(zoneGeo.get_selected_robot(), i, j, buttons);
 						if (!zoneGeo.get_nom_joueur_gagnant().equals("")) {
 							dispose();
-							Jeux.afficher_resultat();
+							Jeu.afficher_resultat();
 						}
 					}
 				}

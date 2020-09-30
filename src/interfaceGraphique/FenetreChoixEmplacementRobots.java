@@ -14,7 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import zoneGeographique.Jeux;
+import zoneGeographique.Jeu;
 import zoneGeographique.ZoneGeographique;
 
 public class FenetreChoixEmplacementRobots extends JFrame implements ActionListener {
@@ -95,9 +95,9 @@ public class FenetreChoixEmplacementRobots extends JFrame implements ActionListe
 			} else {
 				if (estNouvellePartie) {
 					// lancer la fenetre de saisie du nom du deuxieme joueuer
-					Jeux.passer_saisie_joueur2();
+					Jeu.passer_saisie_joueur2();
 				} else {
-					Jeux.passer_choix_intrus(estNouvellePartie);
+					Jeu.passer_choix_intrus(estNouvellePartie);
 				}
 				dispose();
 			}

@@ -14,7 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import zoneGeographique.Jeux;
+import zoneGeographique.Jeu;
 import zoneGeographique.ZoneGeographique;
 
 public class FenetreChoixEmplacement extends JFrame implements ActionListener {
@@ -57,7 +57,7 @@ public class FenetreChoixEmplacement extends JFrame implements ActionListener {
 		JPanel bottomPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 
-		topLabel = new JLabel("Veuillez choisir une configuration du jeux");
+		topLabel = new JLabel("Veuillez choisir une configuration du jeu");
 		topLabel.setForeground(new Color(17, 133, 224));
 		topLabel.setFont(new Font("Arial", Font.BOLD, 17));
 		topPanel.add(topLabel);
@@ -137,7 +137,7 @@ public class FenetreChoixEmplacement extends JFrame implements ActionListener {
 					bottomLabel
 							.setText("Vous n'avez pas encore choisi les " + zoneGeo.get_nb_obstacles() + " obstacles");
 				} else {
-					Jeux.passer_choix_robots(estNouvellePartie);
+					Jeu.passer_choix_robots(estNouvellePartie);
 					dispose();
 				}
 			}

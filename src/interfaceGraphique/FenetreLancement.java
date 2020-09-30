@@ -4,23 +4,22 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import zoneGeographique.Jeux;
+import zoneGeographique.Jeu;
 
 public class FenetreLancement extends JFrame implements ActionListener {
 
-	private JTextArea infoJeux; // prï¿½sentation du jeux et des regles
+	private JTextArea infoJeu; // presentation du jeu et des regles
 	private JButton partieRapide, partieConfig;
 	private JPanel bottomPanel;
-	private JScrollPane scrollPane;
 
 	private boolean garderJoueurs;
 	private String nomJ1, nomJ2;
@@ -28,7 +27,7 @@ public class FenetreLancement extends JFrame implements ActionListener {
 	public FenetreLancement(boolean garderJoueurs) {
 
 		/*
-		 * fenetre contenant une presentation du jeux et de ses regles et permettant de
+		 * fenetre contenant une presentation du jeu et de ses regles et permettant de
 		 * lancer une partie rapide ou bien configurer une partie
 		 */
 
@@ -37,12 +36,18 @@ public class FenetreLancement extends JFrame implements ActionListener {
 		this.garderJoueurs = garderJoueurs;
 		setLayout(new BorderLayout());
 
-		infoJeux = new JTextArea("Presentation du jeux  ... add it later");
-		infoJeux.setLineWrap(true);
-		infoJeux.setEditable(false);
-		scrollPane = new JScrollPane(infoJeux);
+		infoJeu = new JTextArea("\n\nLe jeu necessite deux joueurs.\n"
+				+ "Le premier contrôle les robots dans le but de protéger les sources d'argents et emprisonner les intrus.\n"
+				+ "Les intrus sont contrôlés par le deuxième joueur essayant de voler les sources et s'enfuir à travers les sorties.\n"
+				+ "Le mouvement des caractères dépend des obstacles placés dans la zone.\n" + "\n"
+				+ " - Un intrus ne peut s'échapper que s'il a réssi à attraper deux sources d'argents.");
+		infoJeu.setFont(new Font(Font.SERIF, Font.BOLD, 20));
+		infoJeu.setLineWrap(true);
+		infoJeu.setMargin(new Insets(20, 20, 20, 20));
+		infoJeu.setWrapStyleWord(true);
+		infoJeu.setEditable(false);
 
-		add(scrollPane, BorderLayout.CENTER);
+		add(infoJeu, BorderLayout.CENTER);
 
 		partieRapide = new JButton("Partie rapide");
 		partieRapide.setFont(new Font("Aerial", Font.BOLD, 13));
@@ -73,11 +78,11 @@ public class FenetreLancement extends JFrame implements ActionListener {
 		if (e.getSource() == partieConfig) {
 			// configurer une partie
 			this.setVisible(false);
-			Jeux.partie_config(garderJoueurs);
+			Jeu.partie_config(garderJoueurs);
 		}
 		if (e.getSource() == partieRapide) {
 			dispose();
-			Jeux.partie_rapide(garderJoueurs);
+			Jeu.partie_rapide(garderJoueurs);
 		}
 	}
 

@@ -14,7 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import zoneGeographique.Jeux;
+import zoneGeographique.Jeu;
 import zoneGeographique.ZoneGeographique;
 
 public class FenetreChoixEmplacementIntrus extends JFrame implements ActionListener {
@@ -89,10 +89,10 @@ public class FenetreChoixEmplacementIntrus extends JFrame implements ActionListe
 			if (zoneGeo.getNbintruschoisi() < zoneGeo.getnbCharacteres()) {
 				bottomLabel.setText("Vous n'avez pas encore choisi les " + zoneGeo.getnbCharacteres() + " intrus");
 			} else {
-				// commencer le jeux ...
+				// commencer le jeu ...
 				zoneGeo.enregistrer_choix(); // creation des objets de type Robot et Intrus
 				zoneGeo.set_etat("tourJoueur1");
-				Jeux.commencer_jeux();
+				Jeu.commencer_jeu();
 				dispose();
 			}
 		}

@@ -3,13 +3,13 @@ package zoneGeographique;
 import interfaceGraphique.FenetreChoixEmplacement;
 import interfaceGraphique.FenetreChoixEmplacementIntrus;
 import interfaceGraphique.FenetreChoixEmplacementRobots;
-import interfaceGraphique.FenetreJeux;
+import interfaceGraphique.FenetreJeu;
 import interfaceGraphique.FenetreLancement;
 import interfaceGraphique.FenetreResultat;
 import interfaceGraphique.FenetreSaisie;
 import interfaceGraphique.FenetreSaisieNomJoueur;
 
-public class Jeux {
+public class Jeu {
 
 	private static FenetreLancement fenetreLancement;
 	private static FenetreSaisie fenetreSaisie;
@@ -18,14 +18,14 @@ public class Jeux {
 	private static FenetreChoixEmplacementRobots fenetreChoixEmplacementRobots;
 	private static FenetreSaisieNomJoueur fenetreSaisieNomJoueur2;
 	private static FenetreChoixEmplacementIntrus fenetreChoixEmplacementIntrus;
-	private static FenetreJeux fenetreJeux;
+	private static FenetreJeu fenetreJeu;
 	private static FenetreResultat fenetreResultat;
 
 	public static void main(String[] args) {
-		lancer_jeux();
+		lancer_jeu();
 	}
 
-	public static void lancer_jeux() {
+	public static void lancer_jeu() {
 		fenetreLancement = new FenetreLancement(false);
 	}
 
@@ -126,15 +126,15 @@ public class Jeux {
 
 	}
 
-	public static void commencer_jeux() {
-		fenetreJeux = new FenetreJeux(fenetreChoixEmplacementIntrus.getZoneGeo(),
+	public static void commencer_jeu() {
+		fenetreJeu = new FenetreJeu(fenetreChoixEmplacementIntrus.getZoneGeo(),
 				fenetreChoixEmplacementIntrus.getButtons());
 		fenetreChoixEmplacementIntrus = null;
 	}
 
 	public static void afficher_resultat() {
-		fenetreResultat = new FenetreResultat(fenetreJeux.getZoneGeo());
-		fenetreJeux = null;
+		fenetreResultat = new FenetreResultat(fenetreJeu.getZoneGeo());
+		fenetreJeu = null;
 	}
 
 }
